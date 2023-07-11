@@ -55,4 +55,4 @@ mo --input_meta_graph dnn_best_model_trained/ckpt_noshuffDIEN3.meta \
 ```
 ./infer.sh openvino bf16
 ```
-Please note, BF16 infer precision native support start from 4th Generation Intel® Xeon® Scalable Processors. Run BF16 on legacy xeon platform may lead to performance degratation. 
+Please note, Xeon native supports BF16 infer precision since [4th Generation Intel® Xeon® Scalable Processors](https://ark.intel.com/content/www/us/en/ark/products/codename/126212/products-formerly-sapphire-rapids.html). Run BF16 on legacy Xeon platform may lead to performance degratation. 

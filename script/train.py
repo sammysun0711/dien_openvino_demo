@@ -19,6 +19,7 @@ parser.add_argument("--data_type", type=str, default='FP32', help="data type: FP
 parser.add_argument("--num_accelerators", type=int, default=1, help="number of accelerators used for training")
 parser.add_argument("--embedding_device", type=str, default='cpu', help="synthetic input embedding layer reside on gpu or cpu")
 parser.add_argument("--backend", type=str, default="tensorflow", help="inference backend: tensorflow or openvino")
+parser.add_argument("--infer_precision", type=str, default="f32", help="inference precision with openvino backend: f32 or bf16")
 
 args = parser.parse_args()
 
@@ -145,10 +146,12 @@ def test_ov(
         maxlen = 100,
         model_type = 'DNN',
         data_type = 'FP32',
-            seed = 2
+        seed = 2,
+        infer_precision = 'f32'
 ):
     model_path = "openvino/FP32/DIEN.xml"
     core = ov.Core()
+    core.set_property("CPU", {"INFERENCE_PRECISION_HINT": infer_precision})
     compiled_model = core.compile_model(model_path, "CPU")
     test_data = DataIterator(test_file, uid_voc, mid_voc, cat_voc, batch_size, maxlen)
     test_auc, test_acc, eval_time, num_iters = eval_ov(test_data, compiled_model)
@@ -501,7 +504,7 @@ if __name__ == '__main__':
             test(model_type=args.model, seed=SEED, batch_size=args.batch_size, data_type=args.data_type)
         elif args.backend == "openvino":
             print("Test DIEN with OpenVINO backend")
-            test_ov(model_type=args.model, seed=SEED, batch_size=args.batch_size, data_type=args.data_type)
+            test_ov(model_type=args.model, seed=SEED, batch_size=args.batch_size, data_type=args.data_type, infer_precision=args.infer_precision)
         else:
             print("Wrong backend selected! Only supported Tensorflow or OpenVINO as backend")
             

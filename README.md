@@ -42,7 +42,12 @@ mo --input_meta_graph dnn_best_model_trained/ckpt_noshuffDIEN3.meta \
 ./infer.sh tensorflow
 ```
 
-### Run the Benchmark with OpenVINO backend
+### Run the Benchmark with OpenVINO backend using FP32 inference precision
 ```
-./infer.sh openvino
+./infer.sh openvino f32
+```
+
+### Run the Benchmark with OpenVINO backend using BF16 inference precision, only valid for 4th Generation Intel® Xeon® Scalable Processors and later generation
+```
+./infer.sh openvino bf16
 ```

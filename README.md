@@ -51,7 +51,8 @@ mo --input_meta_graph dnn_best_model_trained/ckpt_noshuffDIEN3.meta \
 ./infer.sh openvino f32
 ```
 
-### Run the Benchmark with OpenVINO backend using BF16 inference precision, only valid for 4th Generation Intel® Xeon® Scalable Processors and later generation
+### Run the Benchmark with OpenVINO backend using BF16 inference precision
 ```
 ./infer.sh openvino bf16
 ```
+Please note, BF16 infer precision native support start from 4th Generation Intel® Xeon® Scalable Processors. Run BF16 on legacy xeon platform may lead to performance degratation. 

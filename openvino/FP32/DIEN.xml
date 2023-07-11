@@ -1,0 +1,5079 @@
+<?xml version="1.0"?>
+<net name="DIEN" version="11">
+	<layers>
+		<layer id="6" name="Inputs/mid_his_batch_ph" type="Parameter" version="opset1">
+			<data shape="?,?" element_type="i32" />
+			<output>
+				<port id="0" precision="I32" names="Inputs/mid_his_batch_ph,Inputs/mid_his_batch_ph:0">
+					<dim>-1</dim>
+					<dim>-1</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="5" name="Inputs/cat_his_batch_ph" type="Parameter" version="opset1">
+			<data shape="?,?" element_type="i32" />
+			<output>
+				<port id="0" precision="I32" names="Inputs/cat_his_batch_ph,Inputs/cat_his_batch_ph:0">
+					<dim>-1</dim>
+					<dim>-1</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="4" name="Inputs/uid_batch_ph" type="Parameter" version="opset1">
+			<data shape="?" element_type="i32" />
+			<output>
+				<port id="0" precision="I32" names="Inputs/uid_batch_ph,Inputs/uid_batch_ph:0">
+					<dim>-1</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="3" name="Inputs/mid_batch_ph" type="Parameter" version="opset1">
+			<data shape="?" element_type="i32" />
+			<output>
+				<port id="0" precision="I32" names="Inputs/mid_batch_ph,Inputs/mid_batch_ph:0">
+					<dim>-1</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="2" name="Inputs/cat_batch_ph" type="Parameter" version="opset1">
+			<data shape="?" element_type="i32" />
+			<output>
+				<port id="0" precision="I32" names="Inputs/cat_batch_ph,Inputs/cat_batch_ph:0">
+					<dim>-1</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="1" name="Inputs/mask" type="Parameter" version="opset1">
+			<data shape="?,?" element_type="f32" />
+			<output>
+				<port id="0" precision="FP32" names="Inputs/mask,Inputs/mask:0">
+					<dim>-1</dim>
+					<dim>-1</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="0" name="Inputs/seq_len_ph" type="Parameter" version="opset1">
+			<data shape="?" element_type="i32" />
+			<output>
+				<port id="0" precision="I32" names="Inputs/seq_len_ph,Inputs/seq_len_ph:0,dien/rnn_1/gru1/CheckSeqLen:0,dien/rnn_1/sequence_length:0,dien/rnn_2/gru2/CheckSeqLen:0,dien/rnn_2/sequence_length:0">
+					<dim>-1</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="7" name="uid_embedding_var/read" type="Const" version="opset1">
+			<data element_type="f32" shape="543060, 18" offset="0" size="39100320" />
+			<output>
+				<port id="0" precision="FP32" names="uid_embedding_var/read:0">
+					<dim>543060</dim>
+					<dim>18</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="8" name="Embedding_layer/embedding_lookup/axis" type="Const" version="opset1">
+			<data element_type="i64" shape="" offset="39100320" size="8" />
+			<output>
+				<port id="0" precision="I64" names="Embedding_layer/embedding_lookup/axis:0" />
+			</output>
+		</layer>
+		<layer id="9" name="Embedding_layer/embedding_lookup" type="Gather" version="opset8">
+			<data batch_dims="0" />
+			<input>
+				<port id="0" precision="FP32">
+					<dim>543060</dim>
+					<dim>18</dim>
+				</port>
+				<port id="1" precision="I32">
+					<dim>-1</dim>
+				</port>
+				<port id="2" precision="I64" />
+			</input>
+			<output>
+				<port id="3" precision="FP32" names="Embedding_layer/embedding_lookup:0">
+					<dim>-1</dim>
+					<dim>18</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="10" name="mid_embedding_var/read" type="Const" version="opset1">
+			<data element_type="f32" shape="367983, 18" offset="39100328" size="26494776" />
+			<output>
+				<port id="0" precision="FP32" names="mid_embedding_var/read:0">
+					<dim>367983</dim>
+					<dim>18</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="11" name="Embedding_layer/embedding_lookup_1/axis" type="Const" version="opset1">
+			<data element_type="i64" shape="" offset="39100320" size="8" />
+			<output>
+				<port id="0" precision="I64" names="Embedding_layer/embedding_lookup_1/axis:0" />
+			</output>
+		</layer>
+		<layer id="12" name="Embedding_layer/embedding_lookup_1" type="Gather" version="opset8">
+			<data batch_dims="0" />
+			<input>
+				<port id="0" precision="FP32">
+					<dim>367983</dim>
+					<dim>18</dim>
+				</port>
+				<port id="1" precision="I32">
+					<dim>-1</dim>
+				</port>
+				<port id="2" precision="I64" />
+			</input>
+			<output>
+				<port id="3" precision="FP32" names="Embedding_layer/embedding_lookup_1:0">
+					<dim>-1</dim>
+					<dim>18</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="13" name="cat_embedding_var/read11114" type="Const" version="opset1">
+			<data element_type="f32" shape="1601, 18" offset="65595104" size="115272" />
+			<output>
+				<port id="0" precision="FP32" names="cat_embedding_var/read:0">
+					<dim>1601</dim>
+					<dim>18</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="14" name="Embedding_layer/embedding_lookup_4/axis" type="Const" version="opset1">
+			<data element_type="i64" shape="" offset="39100320" size="8" />
+			<output>
+				<port id="0" precision="I64" names="Embedding_layer/embedding_lookup_4/axis:0" />
+			</output>
+		</layer>
+		<layer id="15" name="Embedding_layer/embedding_lookup_4" type="Gather" version="opset8">
+			<data batch_dims="0" />
+			<input>
+				<port id="0" precision="FP32">
+					<dim>1601</dim>
+					<dim>18</dim>
+				</port>
+				<port id="1" precision="I32">
+					<dim>-1</dim>
+				</port>
+				<port id="2" precision="I64" />
+			</input>
+			<output>
+				<port id="3" precision="FP32" names="Embedding_layer/embedding_lookup_4:0">
+					<dim>-1</dim>
+					<dim>18</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="16" name="concat" type="Concat" version="opset1">
+			<data axis="1" />
+			<input>
+				<port id="0" precision="FP32">
+					<dim>-1</dim>
+					<dim>18</dim>
+				</port>
+				<port id="1" precision="FP32">
+					<dim>-1</dim>
+					<dim>18</dim>
+				</port>
+			</input>
+			<output>
+				<port id="2" precision="FP32" names="concat:0">
+					<dim>-1</dim>
+					<dim>36</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="17" name="mid_embedding_var/read11117" type="Const" version="opset1">
+			<data element_type="f32" shape="367983, 18" offset="39100328" size="26494776" />
+			<output>
+				<port id="0" precision="FP32" names="mid_embedding_var/read:0">
+					<dim>367983</dim>
+					<dim>18</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="18" name="Embedding_layer/embedding_lookup_2/axis" type="Const" version="opset1">
+			<data element_type="i64" shape="" offset="39100320" size="8" />
+			<output>
+				<port id="0" precision="I64" names="Embedding_layer/embedding_lookup_2/axis:0" />
+			</output>
+		</layer>
+		<layer id="19" name="Embedding_layer/embedding_lookup_2" type="Gather" version="opset8">
+			<data batch_dims="0" />
+			<input>
+				<port id="0" precision="FP32">
+					<dim>367983</dim>
+					<dim>18</dim>
+				</port>
+				<port id="1" precision="I32">
+					<dim>-1</dim>
+					<dim>-1</dim>
+				</port>
+				<port id="2" precision="I64" />
+			</input>
+			<output>
+				<port id="3" precision="FP32" names="Embedding_layer/embedding_lookup_2:0">
+					<dim>-1</dim>
+					<dim>-1</dim>
+					<dim>18</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="20" name="cat_embedding_var/read" type="Const" version="opset1">
+			<data element_type="f32" shape="1601, 18" offset="65595104" size="115272" />
+			<output>
+				<port id="0" precision="FP32" names="cat_embedding_var/read:0">
+					<dim>1601</dim>
+					<dim>18</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="21" name="Embedding_layer/embedding_lookup_5/axis" type="Const" version="opset1">
+			<data element_type="i64" shape="" offset="39100320" size="8" />
+			<output>
+				<port id="0" precision="I64" names="Embedding_layer/embedding_lookup_5/axis:0" />
+			</output>
+		</layer>
+		<layer id="22" name="Embedding_layer/embedding_lookup_5" type="Gather" version="opset8">
+			<data batch_dims="0" />
+			<input>
+				<port id="0" precision="FP32">
+					<dim>1601</dim>
+					<dim>18</dim>
+				</port>
+				<port id="1" precision="I32">
+					<dim>-1</dim>
+					<dim>-1</dim>
+				</port>
+				<port id="2" precision="I64" />
+			</input>
+			<output>
+				<port id="3" precision="FP32" names="Embedding_layer/embedding_lookup_5:0">
+					<dim>-1</dim>
+					<dim>-1</dim>
+					<dim>18</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="23" name="concat_1" type="Concat" version="opset1">
+			<data axis="2" />
+			<input>
+				<port id="0" precision="FP32">
+					<dim>-1</dim>
+					<dim>-1</dim>
+					<dim>18</dim>
+				</port>
+				<port id="1" precision="FP32">
+					<dim>-1</dim>
+					<dim>-1</dim>
+					<dim>18</dim>
+				</port>
+			</input>
+			<output>
+				<port id="2" precision="FP32" names="concat_1:0">
+					<dim>-1</dim>
+					<dim>-1</dim>
+					<dim>36</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="24" name="Sum/reduction_indices" type="Const" version="opset1">
+			<data element_type="i64" shape="" offset="65710376" size="8" />
+			<output>
+				<port id="0" precision="I64" names="Sum/reduction_indices:0" />
+			</output>
+		</layer>
+		<layer id="25" name="Sum" type="ReduceSum" version="opset1">
+			<data keep_dims="false" />
+			<input>
+				<port id="0" precision="FP32">
+					<dim>-1</dim>
+					<dim>-1</dim>
+					<dim>36</dim>
+				</port>
+				<port id="1" precision="I64" />
+			</input>
+			<output>
+				<port id="2" precision="FP32" names="Sum:0">
+					<dim>-1</dim>
+					<dim>36</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="26" name="dien/mul" type="Multiply" version="opset1">
+			<data auto_broadcast="numpy" />
+			<input>
+				<port id="0" precision="FP32">
+					<dim>-1</dim>
+					<dim>36</dim>
+				</port>
+				<port id="1" precision="FP32">
+					<dim>-1</dim>
+					<dim>36</dim>
+				</port>
+			</input>
+			<output>
+				<port id="2" precision="FP32" names="dien/mul:0">
+					<dim>-1</dim>
+					<dim>36</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="27" name="dien/Attention_layer_1/ones_like/Const" type="Const" version="opset1">
+			<data element_type="f32" shape="" offset="65710384" size="4" />
+			<output>
+				<port id="0" precision="FP32" names="dien/Attention_layer_1/ones_like/Const:0" />
+			</output>
+		</layer>
+		<layer id="28" name="dien/Attention_layer_1/ones_like/Shape" type="ShapeOf" version="opset3">
+			<data output_type="i32" />
+			<input>
+				<port id="0" precision="FP32">
+					<dim>-1</dim>
+					<dim>-1</dim>
+				</port>
+			</input>
+			<output>
+				<port id="1" precision="I32">
+					<dim>2</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="29" name="dien/Attention_layer_1/ones_like/Broadcast/Cast_1" type="Convert" version="opset1">
+			<data destination_type="i64" />
+			<input>
+				<port id="0" precision="I32">
+					<dim>2</dim>
+				</port>
+			</input>
+			<output>
+				<port id="1" precision="I64" names="dien/Attention_layer_1/ones_like/Shape:0">
+					<dim>2</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="30" name="dien/Attention_layer_1/ones_like/Broadcast" type="Broadcast" version="opset3">
+			<data mode="numpy" />
+			<input>
+				<port id="0" precision="FP32" />
+				<port id="1" precision="I64">
+					<dim>2</dim>
+				</port>
+			</input>
+			<output>
+				<port id="2" precision="FP32" names="dien/Attention_layer_1/ones_like:0">
+					<dim>-1</dim>
+					<dim>-1</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="31" name="dien/Attention_layer_1/Equal" type="Equal" version="opset1">
+			<data auto_broadcast="numpy" />
+			<input>
+				<port id="0" precision="FP32">
+					<dim>-1</dim>
+					<dim>-1</dim>
+				</port>
+				<port id="1" precision="FP32">
+					<dim>-1</dim>
+					<dim>-1</dim>
+				</port>
+			</input>
+			<output>
+				<port id="2" precision="BOOL" names="dien/Attention_layer_1/Equal:0">
+					<dim>-1</dim>
+					<dim>-1</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="32" name="dien/Attention_layer_1/ExpandDims/dim" type="Const" version="opset1">
+			<data element_type="i64" shape="1" offset="65710376" size="8" />
+			<output>
+				<port id="0" precision="I64" names="dien/Attention_layer_1/ExpandDims/dim:0">
+					<dim>1</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="33" name="dien/Attention_layer_1/ExpandDims" type="Unsqueeze" version="opset1">
+			<input>
+				<port id="0" precision="BOOL">
+					<dim>-1</dim>
+					<dim>-1</dim>
+				</port>
+				<port id="1" precision="I64">
+					<dim>1</dim>
+				</port>
+			</input>
+			<output>
+				<port id="2" precision="BOOL" names="dien/Attention_layer_1/ExpandDims:0">
+					<dim>-1</dim>
+					<dim>1</dim>
+					<dim>-1</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="34" name="dien/Attention_layer_1/Cast/x" type="Const" version="opset1">
+			<data element_type="f32" shape="1, 1" offset="65710388" size="4" />
+			<output>
+				<port id="0" precision="FP32" names="dien/Attention_layer_1/Cast/x:0">
+					<dim>1</dim>
+					<dim>1</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="35" name="dien/f11_1/kernel/read" type="Const" version="opset1">
+			<data element_type="f32" shape="36, 36" offset="65710392" size="5184" />
+			<output>
+				<port id="0" precision="FP32" names="dien/f11_1/kernel/read:0">
+					<dim>36</dim>
+					<dim>36</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="36" name="dien/Attention_layer_1/f11_1/MatMul" type="MatMul" version="opset1">
+			<data transpose_a="false" transpose_b="true" />
+			<input>
+				<port id="0" precision="FP32">
+					<dim>-1</dim>
+					<dim>36</dim>
+				</port>
+				<port id="1" precision="FP32">
+					<dim>36</dim>
+					<dim>36</dim>
+				</port>
+			</input>
+			<output>
+				<port id="2" precision="FP32" names="dien/Attention_layer_1/f11_1/MatMul:0">
+					<dim>-1</dim>
+					<dim>36</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="37" name="dien/f11_1/bias/read" type="Const" version="opset1">
+			<data element_type="f32" shape="1, 36" offset="65715576" size="144" />
+			<output>
+				<port id="0" precision="FP32" names="dien/f11_1/bias/read:0">
+					<dim>1</dim>
+					<dim>36</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="38" name="dien/Attention_layer_1/f11_1/BiasAdd/Add" type="Add" version="opset1">
+			<data auto_broadcast="numpy" />
+			<input>
+				<port id="0" precision="FP32">
+					<dim>-1</dim>
+					<dim>36</dim>
+				</port>
+				<port id="1" precision="FP32">
+					<dim>1</dim>
+					<dim>36</dim>
+				</port>
+			</input>
+			<output>
+				<port id="2" precision="FP32" names="dien/Attention_layer_1/f11_1/BiasAdd:0">
+					<dim>-1</dim>
+					<dim>36</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="39" name="dien/Attention_layer_1/Maximum" type="Maximum" version="opset1">
+			<data auto_broadcast="numpy" />
+			<input>
+				<port id="0" precision="FP32">
+					<dim>1</dim>
+					<dim>1</dim>
+				</port>
+				<port id="1" precision="FP32">
+					<dim>-1</dim>
+					<dim>36</dim>
+				</port>
+			</input>
+			<output>
+				<port id="2" precision="FP32" names="dien/Attention_layer_1/Maximum:0">
+					<dim>-1</dim>
+					<dim>36</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="40" name="dien//prelu_/read" type="Const" version="opset1">
+			<data element_type="f32" shape="1, 36" offset="65715720" size="144" />
+			<output>
+				<port id="0" precision="FP32" names="dien//prelu_/read:0">
+					<dim>1</dim>
+					<dim>36</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="41" name="dien/Attention_layer_1/Cast_1/x" type="Const" version="opset1">
+			<data element_type="f32" shape="1, 1" offset="65710388" size="4" />
+			<output>
+				<port id="0" precision="FP32" names="dien/Attention_layer_1/Cast_1/x:0">
+					<dim>1</dim>
+					<dim>1</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="42" name="dien/Attention_layer_1/Minimum" type="Minimum" version="opset1">
+			<data auto_broadcast="numpy" />
+			<input>
+				<port id="0" precision="FP32">
+					<dim>1</dim>
+					<dim>1</dim>
+				</port>
+				<port id="1" precision="FP32">
+					<dim>-1</dim>
+					<dim>36</dim>
+				</port>
+			</input>
+			<output>
+				<port id="2" precision="FP32" names="dien/Attention_layer_1/Minimum:0">
+					<dim>-1</dim>
+					<dim>36</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="43" name="dien/Attention_layer_1/mul" type="Multiply" version="opset1">
+			<data auto_broadcast="numpy" />
+			<input>
+				<port id="0" precision="FP32">
+					<dim>1</dim>
+					<dim>36</dim>
+				</port>
+				<port id="1" precision="FP32">
+					<dim>-1</dim>
+					<dim>36</dim>
+				</port>
+			</input>
+			<output>
+				<port id="2" precision="FP32" names="dien/Attention_layer_1/mul:0">
+					<dim>-1</dim>
+					<dim>36</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="44" name="dien/Attention_layer_1/add" type="Add" version="opset1">
+			<data auto_broadcast="numpy" />
+			<input>
+				<port id="0" precision="FP32">
+					<dim>-1</dim>
+					<dim>36</dim>
+				</port>
+				<port id="1" precision="FP32">
+					<dim>-1</dim>
+					<dim>36</dim>
+				</port>
+			</input>
+			<output>
+				<port id="2" precision="FP32" names="dien/Attention_layer_1/add:0">
+					<dim>-1</dim>
+					<dim>36</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="45" name="dien/Attention_layer_1/Tile/multiples/Unsqueeze" type="Const" version="opset1">
+			<data element_type="i32" shape="1" offset="65715864" size="4" />
+			<output>
+				<port id="0" precision="I32">
+					<dim>1</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="46" name="dien/rnn_1/concat" type="Const" version="opset1">
+			<data element_type="i64" shape="3" offset="65715868" size="24" />
+			<output>
+				<port id="0" precision="I64" names="dien/rnn_1/concat:0">
+					<dim>3</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="47" name="dien/rnn_1/transpose" type="Transpose" version="opset1">
+			<input>
+				<port id="0" precision="FP32">
+					<dim>-1</dim>
+					<dim>-1</dim>
+					<dim>36</dim>
+				</port>
+				<port id="1" precision="I64">
+					<dim>3</dim>
+				</port>
+			</input>
+			<output>
+				<port id="2" precision="FP32" names="dien/rnn_1/transpose:0">
+					<dim>-1</dim>
+					<dim>-1</dim>
+					<dim>36</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="48" name="dien/rnn_1/gru1/GRUCellZeroState/zeros/Const" type="Const" version="opset1">
+			<data element_type="f32" shape="" offset="65710388" size="4" />
+			<output>
+				<port id="0" precision="FP32" names="dien/rnn_1/gru1/GRUCellZeroState/zeros/Const:0" />
+			</output>
+		</layer>
+		<layer id="49" name="dien/rnn_1/gru1/Shape" type="ShapeOf" version="opset3">
+			<data output_type="i32" />
+			<input>
+				<port id="0" precision="FP32">
+					<dim>-1</dim>
+					<dim>-1</dim>
+					<dim>36</dim>
+				</port>
+			</input>
+			<output>
+				<port id="1" precision="I32" names="dien/rnn_1/gru1/Shape:0,dien/rnn_1/gru1/Shape_3:0">
+					<dim>3</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="50" name="dien/rnn_1/gru1/strided_slice/stack" type="Const" version="opset1">
+			<data element_type="i64" shape="1" offset="65710376" size="8" />
+			<output>
+				<port id="0" precision="I64" names="dien/rnn_1/gru1/strided_slice/stack:0">
+					<dim>1</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="51" name="dien/rnn_1/gru1/strided_slice/stack_1" type="Const" version="opset1">
+			<data element_type="i64" shape="1" offset="65715892" size="8" />
+			<output>
+				<port id="0" precision="I64" names="dien/rnn_1/gru1/strided_slice/stack_1:0">
+					<dim>1</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="52" name="dien/rnn_1/gru1/strided_slice/stack_2" type="Const" version="opset1">
+			<data element_type="i64" shape="1" offset="65710376" size="8" />
+			<output>
+				<port id="0" precision="I64" names="dien/rnn_1/gru1/strided_slice/stack_2:0">
+					<dim>1</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="53" name="dien/rnn_1/gru1/strided_slice" type="StridedSlice" version="opset1">
+			<data begin_mask="0" end_mask="0" new_axis_mask="0" shrink_axis_mask="1" ellipsis_mask="0" />
+			<input>
+				<port id="0" precision="I32">
+					<dim>3</dim>
+				</port>
+				<port id="1" precision="I64">
+					<dim>1</dim>
+				</port>
+				<port id="2" precision="I64">
+					<dim>1</dim>
+				</port>
+				<port id="3" precision="I64">
+					<dim>1</dim>
+				</port>
+			</input>
+			<output>
+				<port id="4" precision="I32" names="dien/rnn_1/gru1/strided_slice:0" />
+			</output>
+		</layer>
+		<layer id="54" name="dien/rnn_1/gru1/GRUCellZeroState/ExpandDims/dim" type="Const" version="opset1">
+			<data element_type="i64" shape="1" offset="39100320" size="8" />
+			<output>
+				<port id="0" precision="I64" names="dien/rnn_1/gru1/GRUCellZeroState/ExpandDims/dim:0">
+					<dim>1</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="55" name="dien/rnn_1/gru1/GRUCellZeroState/ExpandDims" type="Unsqueeze" version="opset1">
+			<input>
+				<port id="0" precision="I32" />
+				<port id="1" precision="I64">
+					<dim>1</dim>
+				</port>
+			</input>
+			<output>
+				<port id="2" precision="I32" names="dien/rnn_1/gru1/GRUCellZeroState/ExpandDims:0">
+					<dim>1</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="56" name="dien/rnn_1/gru1/GRUCellZeroState/Const" type="Const" version="opset1">
+			<data element_type="i32" shape="1" offset="65715900" size="4" />
+			<output>
+				<port id="0" precision="I32" names="dien/rnn_1/gru1/GRUCellZeroState/Const:0">
+					<dim>1</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="57" name="dien/rnn_1/gru1/GRUCellZeroState/concat" type="Concat" version="opset1">
+			<data axis="0" />
+			<input>
+				<port id="0" precision="I32">
+					<dim>1</dim>
+				</port>
+				<port id="1" precision="I32">
+					<dim>1</dim>
+				</port>
+			</input>
+			<output>
+				<port id="2" precision="I32">
+					<dim>2</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="58" name="dien/rnn_1/gru1/GRUCellZeroState/zeros/Broadcast/Cast_1" type="Convert" version="opset1">
+			<data destination_type="i64" />
+			<input>
+				<port id="0" precision="I32">
+					<dim>2</dim>
+				</port>
+			</input>
+			<output>
+				<port id="1" precision="I64" names="dien/rnn_1/gru1/GRUCellZeroState/concat:0">
+					<dim>2</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="59" name="dien/rnn_1/gru1/GRUCellZeroState/zeros/Broadcast" type="Broadcast" version="opset3">
+			<data mode="numpy" />
+			<input>
+				<port id="0" precision="FP32" />
+				<port id="1" precision="I64">
+					<dim>2</dim>
+				</port>
+			</input>
+			<output>
+				<port id="2" precision="FP32" names="dien/rnn_1/gru1/GRUCellZeroState/zeros:0">
+					<dim>-1</dim>
+					<dim>36</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="60" name="dien/rnn_1/gru1/zeros/Const" type="Const" version="opset1">
+			<data element_type="f32" shape="" offset="65710388" size="4" />
+			<output>
+				<port id="0" precision="FP32" names="dien/rnn_1/gru1/zeros/Const:0" />
+			</output>
+		</layer>
+		<layer id="61" name="dien/rnn_1/gru1/strided_slice_2/stack" type="Const" version="opset1">
+			<data element_type="i64" shape="1" offset="65710376" size="8" />
+			<output>
+				<port id="0" precision="I64" names="dien/rnn_1/gru1/strided_slice_2/stack:0">
+					<dim>1</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="62" name="dien/rnn_1/gru1/strided_slice_2/stack_1" type="Const" version="opset1">
+			<data element_type="i64" shape="1" offset="65715892" size="8" />
+			<output>
+				<port id="0" precision="I64" names="dien/rnn_1/gru1/strided_slice_2/stack_1:0">
+					<dim>1</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="63" name="dien/rnn_1/gru1/strided_slice_2/stack_2" type="Const" version="opset1">
+			<data element_type="i64" shape="1" offset="65710376" size="8" />
+			<output>
+				<port id="0" precision="I64" names="dien/rnn_1/gru1/strided_slice_2/stack_2:0">
+					<dim>1</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="64" name="dien/rnn_1/gru1/strided_slice_2" type="StridedSlice" version="opset1">
+			<data begin_mask="0" end_mask="0" new_axis_mask="0" shrink_axis_mask="1" ellipsis_mask="0" />
+			<input>
+				<port id="0" precision="I32">
+					<dim>3</dim>
+				</port>
+				<port id="1" precision="I64">
+					<dim>1</dim>
+				</port>
+				<port id="2" precision="I64">
+					<dim>1</dim>
+				</port>
+				<port id="3" precision="I64">
+					<dim>1</dim>
+				</port>
+			</input>
+			<output>
+				<port id="4" precision="I32" names="dien/rnn_1/gru1/strided_slice_2:0" />
+			</output>
+		</layer>
+		<layer id="65" name="dien/rnn_1/gru1/ExpandDims/dim" type="Const" version="opset1">
+			<data element_type="i64" shape="1" offset="39100320" size="8" />
+			<output>
+				<port id="0" precision="I64" names="dien/rnn_1/gru1/ExpandDims/dim:0">
+					<dim>1</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="66" name="dien/rnn_1/gru1/ExpandDims" type="Unsqueeze" version="opset1">
+			<input>
+				<port id="0" precision="I32" />
+				<port id="1" precision="I64">
+					<dim>1</dim>
+				</port>
+			</input>
+			<output>
+				<port id="2" precision="I32" names="dien/rnn_1/gru1/ExpandDims:0">
+					<dim>1</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="67" name="dien/rnn_1/gru1/Const_1" type="Const" version="opset1">
+			<data element_type="i32" shape="1" offset="65715900" size="4" />
+			<output>
+				<port id="0" precision="I32" names="dien/rnn_1/gru1/Const_1:0">
+					<dim>1</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="68" name="dien/rnn_1/gru1/concat" type="Concat" version="opset1">
+			<data axis="0" />
+			<input>
+				<port id="0" precision="I32">
+					<dim>1</dim>
+				</port>
+				<port id="1" precision="I32">
+					<dim>1</dim>
+				</port>
+			</input>
+			<output>
+				<port id="2" precision="I32">
+					<dim>2</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="69" name="dien/rnn_1/gru1/zeros/Broadcast/Cast_1" type="Convert" version="opset1">
+			<data destination_type="i64" />
+			<input>
+				<port id="0" precision="I32">
+					<dim>2</dim>
+				</port>
+			</input>
+			<output>
+				<port id="1" precision="I64" names="dien/rnn_1/gru1/concat:0">
+					<dim>2</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="70" name="dien/rnn_1/gru1/zeros/Broadcast" type="Broadcast" version="opset3">
+			<data mode="numpy" />
+			<input>
+				<port id="0" precision="FP32" />
+				<port id="1" precision="I64">
+					<dim>2</dim>
+				</port>
+			</input>
+			<output>
+				<port id="2" precision="FP32" names="dien/rnn_1/gru1/zeros:0">
+					<dim>-1</dim>
+					<dim>36</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="71" name="dien/rnn_1/gru1/while/Enter" type="Const" version="opset1">
+			<data element_type="i32" shape="" offset="65710388" size="4" />
+			<output>
+				<port id="0" precision="I32" names="dien/rnn_1/gru1/while/Enter:0" />
+			</output>
+		</layer>
+		<layer id="72" name="dien/rnn_1/gru1/while/LoopCond/TensorIteratorCondition_/TensorIterator" type="TensorIterator" version="opset1">
+			<port_map>
+				<input axis="0" external_port_id="0" internal_layer_id="4" start="0" end="-1" stride="1" part_size="1" />
+				<input external_port_id="1" internal_layer_id="3" />
+				<input external_port_id="2" internal_layer_id="2" />
+				<input external_port_id="3" internal_layer_id="1" />
+				<input external_port_id="4" internal_layer_id="0" />
+				<output axis="0" external_port_id="5" internal_layer_id="22" start="0" end="-1" stride="1" part_size="1" />
+			</port_map>
+			<back_edges>
+				<edge from-layer="29" to-layer="3" />
+				<edge from-layer="7" to-layer="0" />
+			</back_edges>
+			<input>
+				<port id="0" precision="FP32">
+					<dim>-1</dim>
+					<dim>-1</dim>
+					<dim>36</dim>
+				</port>
+				<port id="1" precision="FP32">
+					<dim>-1</dim>
+					<dim>36</dim>
+				</port>
+				<port id="2" precision="FP32">
+					<dim>-1</dim>
+					<dim>36</dim>
+				</port>
+				<port id="3" precision="I32">
+					<dim>-1</dim>
+				</port>
+				<port id="4" precision="I32" />
+			</input>
+			<output>
+				<port id="5" precision="FP32" names="dien/rnn_1/gru1/TensorArrayStack/TensorArrayGatherV3:0">
+					<dim>-1</dim>
+					<dim>-1</dim>
+					<dim>36</dim>
+				</port>
+			</output>
+			<body>
+				<layers>
+					<layer id="4" name="74" type="Parameter" version="opset1">
+						<data shape="1,?,36" element_type="f32" />
+						<rt_info>
+							<attribute name="fused_names" version="0" value="74" />
+						</rt_info>
+						<output>
+							<port id="0" precision="FP32">
+								<dim>1</dim>
+								<dim>-1</dim>
+								<dim>36</dim>
+							</port>
+						</output>
+					</layer>
+					<layer id="3" name="82" type="Parameter" version="opset1">
+						<data shape="?,36" element_type="f32" />
+						<rt_info>
+							<attribute name="fused_names" version="0" value="82" />
+						</rt_info>
+						<output>
+							<port id="0" precision="FP32">
+								<dim>-1</dim>
+								<dim>36</dim>
+							</port>
+						</output>
+					</layer>
+					<layer id="2" name="84" type="Parameter" version="opset1">
+						<data shape="?,36" element_type="f32" />
+						<rt_info>
+							<attribute name="fused_names" version="0" value="84" />
+						</rt_info>
+						<output>
+							<port id="0" precision="FP32">
+								<dim>-1</dim>
+								<dim>36</dim>
+							</port>
+						</output>
+					</layer>
+					<layer id="1" name="86" type="Parameter" version="opset1">
+						<data shape="?" element_type="i32" />
+						<rt_info>
+							<attribute name="fused_names" version="0" value="86" />
+						</rt_info>
+						<output>
+							<port id="0" precision="I32">
+								<dim>-1</dim>
+							</port>
+						</output>
+					</layer>
+					<layer id="0" name="92" type="Parameter" version="opset1">
+						<data shape="" element_type="i32" />
+						<rt_info>
+							<attribute name="fused_names" version="0" value="92" />
+						</rt_info>
+						<output>
+							<port id="0" precision="I32" />
+						</output>
+					</layer>
+					<layer id="5" name="dien/rnn_1/gru1/while/add/y" type="Const" version="opset1">
+						<data element_type="i32" shape="" offset="65715864" size="4" />
+						<rt_info>
+							<attribute name="fused_names" version="0" value="dien/rnn_1/gru1/while/add/y" />
+						</rt_info>
+						<output>
+							<port id="0" precision="I32" names="dien/rnn_1/gru1/while/add/y:0" />
+						</output>
+					</layer>
+					<layer id="6" name="dien/rnn_1/gru1/while/add" type="Add" version="opset1">
+						<data auto_broadcast="numpy" />
+						<rt_info>
+							<attribute name="fused_names" version="0" value="dien/rnn_1/gru1/while/add" />
+						</rt_info>
+						<input>
+							<port id="0" precision="I32" />
+							<port id="1" precision="I32" />
+						</input>
+						<output>
+							<port id="2" precision="I32" names="dien/rnn_1/gru1/while/add:0" />
+						</output>
+					</layer>
+					<layer id="8" name="90/EltwiseUnsqueeze_input_port_1/value408885" type="Const" version="opset1">
+						<data element_type="i64" shape="1" offset="39100320" size="8" />
+						<rt_info>
+							<attribute name="fused_names" version="0" value="90/EltwiseUnsqueeze_input_port_1/value408885" />
+						</rt_info>
+						<output>
+							<port id="0" precision="I64">
+								<dim>1</dim>
+							</port>
+						</output>
+					</layer>
+					<layer id="9" name="90/EltwiseUnsqueeze" type="Unsqueeze" version="opset1">
+						<rt_info>
+							<attribute name="fused_names" version="0" value="90/EltwiseUnsqueeze" />
+						</rt_info>
+						<input>
+							<port id="0" precision="I32" />
+							<port id="1" precision="I64">
+								<dim>1</dim>
+							</port>
+						</input>
+						<output>
+							<port id="2" precision="I32">
+								<dim>1</dim>
+							</port>
+						</output>
+					</layer>
+					<layer id="10" name="dien/rnn_1/gru1/while/GreaterEqual" type="GreaterEqual" version="opset1">
+						<data auto_broadcast="numpy" />
+						<rt_info>
+							<attribute name="fused_names" version="0" value="dien/rnn_1/gru1/while/GreaterEqual" />
+						</rt_info>
+						<input>
+							<port id="0" precision="I32">
+								<dim>1</dim>
+							</port>
+							<port id="1" precision="I32">
+								<dim>-1</dim>
+							</port>
+						</input>
+						<output>
+							<port id="2" precision="BOOL" names="dien/rnn_1/gru1/while/GreaterEqual:0">
+								<dim>-1</dim>
+							</port>
+						</output>
+					</layer>
+					<layer id="11" name="dien/rnn_1/gru1/while/Select/Broadcast//value512876" type="Const" version="opset1">
+						<data element_type="i64" shape="1" offset="65710376" size="8" />
+						<rt_info>
+							<attribute name="fused_names" version="0" value="dien/rnn_1/gru1/while/Select/Broadcast//value512876" />
+						</rt_info>
+						<output>
+							<port id="0" precision="I64">
+								<dim>1</dim>
+							</port>
+						</output>
+					</layer>
+					<layer id="12" name="dien/rnn_1/gru1/while/Select/Broadcast/" type="Unsqueeze" version="opset1">
+						<rt_info>
+							<attribute name="fused_names" version="0" value="dien/rnn_1/gru1/while/Select/Broadcast/" />
+						</rt_info>
+						<input>
+							<port id="0" precision="BOOL">
+								<dim>-1</dim>
+							</port>
+							<port id="1" precision="I64">
+								<dim>1</dim>
+							</port>
+						</input>
+						<output>
+							<port id="2" precision="BOOL">
+								<dim>-1</dim>
+								<dim>1</dim>
+							</port>
+						</output>
+					</layer>
+					<layer id="13" name="67900" type="Const" version="opset1">
+						<data element_type="i64" shape="1" offset="39100320" size="8" />
+						<rt_info>
+							<attribute name="fused_names" version="0" value="67900" />
+						</rt_info>
+						<output>
+							<port id="0" precision="I64">
+								<dim>1</dim>
+							</port>
+						</output>
+					</layer>
+					<layer id="14" name="dien/rnn_1/gru1/while/TensorArrayReadV3/Output_0/Data_/InputSqueeze" type="Squeeze" version="opset1">
+						<rt_info>
+							<attribute name="fused_names" version="0" value="dien/rnn_1/gru1/while/TensorArrayReadV3/Output_0/Data_/InputSqueeze" />
+						</rt_info>
+						<input>
+							<port id="0" precision="FP32">
+								<dim>1</dim>
+								<dim>-1</dim>
+								<dim>36</dim>
+							</port>
+							<port id="1" precision="I64">
+								<dim>1</dim>
+							</port>
+						</input>
+						<output>
+							<port id="2" precision="FP32" names="dien/rnn_1/gru1/while/TensorArrayReadV3:0">
+								<dim>-1</dim>
+								<dim>36</dim>
+							</port>
+						</output>
+					</layer>
+					<layer id="15" name="Concat_3893" type="Const" version="opset1">
+						<data element_type="f32" shape="108, 36" offset="65715904" size="15552" />
+						<rt_info>
+							<attribute name="fused_names" version="0" value="82, dien/rnn_1/gru1/while/TensorArrayReadV3/Output_0/Data_/InputSqueeze, dien/rnn_1/gru1/while/gru_cell/BiasAdd/Add, dien/rnn_1/gru1/while/gru_cell/BiasAdd/Enter, dien/rnn_1/gru1/while/gru_cell/BiasAdd_1/Add, dien/rnn_1/gru1/while/gru_cell/BiasAdd_1/Enter, dien/rnn_1/gru1/while/gru_cell/MatMul, dien/rnn_1/gru1/while/gru_cell/MatMul/Enter, dien/rnn_1/gru1/while/gru_cell/MatMul_1, dien/rnn_1/gru1/while/gru_cell/MatMul_1/Enter, dien/rnn_1/gru1/while/gru_cell/Sigmoid, dien/rnn_1/gru1/while/gru_cell/Tanh, dien/rnn_1/gru1/while/gru_cell/add, dien/rnn_1/gru1/while/gru_cell/concat, dien/rnn_1/gru1/while/gru_cell/concat_1, dien/rnn_1/gru1/while/gru_cell/mul, dien/rnn_1/gru1/while/gru_cell/mul_1, dien/rnn_1/gru1/while/gru_cell/mul_2, dien/rnn_1/gru1/while/gru_cell/split, dien/rnn_1/gru1/while/gru_cell/split/split_dim, dien/rnn_1/gru1/while/gru_cell/sub, dien/rnn_1/gru1/while/gru_cell/sub/neg_, dien/rnn_1/gru1/while/gru_cell/sub/x" />
+						</rt_info>
+						<output>
+							<port id="0" precision="FP32">
+								<dim>108</dim>
+								<dim>36</dim>
+							</port>
+						</output>
+					</layer>
+					<layer id="16" name="Concat_3894" type="Const" version="opset1">
+						<data element_type="f32" shape="108, 36" offset="65731456" size="15552" />
+						<rt_info>
+							<attribute name="fused_names" version="0" value="82, dien/rnn_1/gru1/while/TensorArrayReadV3/Output_0/Data_/InputSqueeze, dien/rnn_1/gru1/while/gru_cell/BiasAdd/Add, dien/rnn_1/gru1/while/gru_cell/BiasAdd/Enter, dien/rnn_1/gru1/while/gru_cell/BiasAdd_1/Add, dien/rnn_1/gru1/while/gru_cell/BiasAdd_1/Enter, dien/rnn_1/gru1/while/gru_cell/MatMul, dien/rnn_1/gru1/while/gru_cell/MatMul/Enter, dien/rnn_1/gru1/while/gru_cell/MatMul_1, dien/rnn_1/gru1/while/gru_cell/MatMul_1/Enter, dien/rnn_1/gru1/while/gru_cell/Sigmoid, dien/rnn_1/gru1/while/gru_cell/Tanh, dien/rnn_1/gru1/while/gru_cell/add, dien/rnn_1/gru1/while/gru_cell/concat, dien/rnn_1/gru1/while/gru_cell/concat_1, dien/rnn_1/gru1/while/gru_cell/mul, dien/rnn_1/gru1/while/gru_cell/mul_1, dien/rnn_1/gru1/while/gru_cell/mul_2, dien/rnn_1/gru1/while/gru_cell/split, dien/rnn_1/gru1/while/gru_cell/split/split_dim, dien/rnn_1/gru1/while/gru_cell/sub, dien/rnn_1/gru1/while/gru_cell/sub/neg_, dien/rnn_1/gru1/while/gru_cell/sub/x" />
+						</rt_info>
+						<output>
+							<port id="0" precision="FP32">
+								<dim>108</dim>
+								<dim>36</dim>
+							</port>
+						</output>
+					</layer>
+					<layer id="17" name="Squeeze_3897" type="Const" version="opset1">
+						<data element_type="f32" shape="108" offset="65747008" size="432" />
+						<rt_info>
+							<attribute name="fused_names" version="0" value="82, dien/rnn_1/gru1/while/TensorArrayReadV3/Output_0/Data_/InputSqueeze, dien/rnn_1/gru1/while/gru_cell/BiasAdd/Add, dien/rnn_1/gru1/while/gru_cell/BiasAdd/Enter, dien/rnn_1/gru1/while/gru_cell/BiasAdd_1/Add, dien/rnn_1/gru1/while/gru_cell/BiasAdd_1/Enter, dien/rnn_1/gru1/while/gru_cell/MatMul, dien/rnn_1/gru1/while/gru_cell/MatMul/Enter, dien/rnn_1/gru1/while/gru_cell/MatMul_1, dien/rnn_1/gru1/while/gru_cell/MatMul_1/Enter, dien/rnn_1/gru1/while/gru_cell/Sigmoid, dien/rnn_1/gru1/while/gru_cell/Tanh, dien/rnn_1/gru1/while/gru_cell/add, dien/rnn_1/gru1/while/gru_cell/concat, dien/rnn_1/gru1/while/gru_cell/concat_1, dien/rnn_1/gru1/while/gru_cell/mul, dien/rnn_1/gru1/while/gru_cell/mul_1, dien/rnn_1/gru1/while/gru_cell/mul_2, dien/rnn_1/gru1/while/gru_cell/split, dien/rnn_1/gru1/while/gru_cell/split/split_dim, dien/rnn_1/gru1/while/gru_cell/sub, dien/rnn_1/gru1/while/gru_cell/sub/neg_, dien/rnn_1/gru1/while/gru_cell/sub/x" />
+						</rt_info>
+						<output>
+							<port id="0" precision="FP32">
+								<dim>108</dim>
+							</port>
+						</output>
+					</layer>
+					<layer id="18" name="dien/rnn_1/gru1/while/gru_cell/add" type="GRUCell" version="opset3">
+						<data linear_before_reset="false" hidden_size="36" activations="sigmoid, tanh" activations_alpha="" activations_beta="" clip="0" />
+						<rt_info>
+							<attribute name="fused_names" version="0" value="82, dien/rnn_1/gru1/while/TensorArrayReadV3/Output_0/Data_/InputSqueeze, dien/rnn_1/gru1/while/gru_cell/BiasAdd/Add, dien/rnn_1/gru1/while/gru_cell/BiasAdd/Enter, dien/rnn_1/gru1/while/gru_cell/BiasAdd_1/Add, dien/rnn_1/gru1/while/gru_cell/BiasAdd_1/Enter, dien/rnn_1/gru1/while/gru_cell/MatMul, dien/rnn_1/gru1/while/gru_cell/MatMul/Enter, dien/rnn_1/gru1/while/gru_cell/MatMul_1, dien/rnn_1/gru1/while/gru_cell/MatMul_1/Enter, dien/rnn_1/gru1/while/gru_cell/Sigmoid, dien/rnn_1/gru1/while/gru_cell/Tanh, dien/rnn_1/gru1/while/gru_cell/add, dien/rnn_1/gru1/while/gru_cell/concat, dien/rnn_1/gru1/while/gru_cell/concat_1, dien/rnn_1/gru1/while/gru_cell/mul, dien/rnn_1/gru1/while/gru_cell/mul_1, dien/rnn_1/gru1/while/gru_cell/mul_2, dien/rnn_1/gru1/while/gru_cell/split, dien/rnn_1/gru1/while/gru_cell/split/split_dim, dien/rnn_1/gru1/while/gru_cell/sub, dien/rnn_1/gru1/while/gru_cell/sub/neg_, dien/rnn_1/gru1/while/gru_cell/sub/x" />
+						</rt_info>
+						<input>
+							<port id="0" precision="FP32">
+								<dim>-1</dim>
+								<dim>36</dim>
+							</port>
+							<port id="1" precision="FP32">
+								<dim>-1</dim>
+								<dim>36</dim>
+							</port>
+							<port id="2" precision="FP32">
+								<dim>108</dim>
+								<dim>36</dim>
+							</port>
+							<port id="3" precision="FP32">
+								<dim>108</dim>
+								<dim>36</dim>
+							</port>
+							<port id="4" precision="FP32">
+								<dim>108</dim>
+							</port>
+						</input>
+						<output>
+							<port id="5" precision="FP32" names="dien/rnn_1/gru1/while/gru_cell/add:0">
+								<dim>-1</dim>
+								<dim>36</dim>
+							</port>
+						</output>
+					</layer>
+					<layer id="19" name="dien/rnn_1/gru1/while/Select" type="Select" version="opset1">
+						<data auto_broadcast="numpy" />
+						<rt_info>
+							<attribute name="fused_names" version="0" value="dien/rnn_1/gru1/while/Select" />
+						</rt_info>
+						<input>
+							<port id="0" precision="BOOL">
+								<dim>-1</dim>
+								<dim>1</dim>
+							</port>
+							<port id="1" precision="FP32">
+								<dim>-1</dim>
+								<dim>36</dim>
+							</port>
+							<port id="2" precision="FP32">
+								<dim>-1</dim>
+								<dim>36</dim>
+							</port>
+						</input>
+						<output>
+							<port id="3" precision="FP32" names="dien/rnn_1/gru1/while/Select:0">
+								<dim>-1</dim>
+								<dim>36</dim>
+							</port>
+						</output>
+					</layer>
+					<layer id="20" name="70879" type="Const" version="opset1">
+						<data element_type="i64" shape="1" offset="39100320" size="8" />
+						<rt_info>
+							<attribute name="fused_names" version="0" value="70879" />
+						</rt_info>
+						<output>
+							<port id="0" precision="I64">
+								<dim>1</dim>
+							</port>
+						</output>
+					</layer>
+					<layer id="21" name="dien/rnn_1/gru1/while/Select/Output_0/Data_/OutputUnsqueeze" type="Unsqueeze" version="opset1">
+						<rt_info>
+							<attribute name="fused_names" version="0" value="dien/rnn_1/gru1/while/Select/Output_0/Data_/OutputUnsqueeze" />
+						</rt_info>
+						<input>
+							<port id="0" precision="FP32">
+								<dim>-1</dim>
+								<dim>36</dim>
+							</port>
+							<port id="1" precision="I64">
+								<dim>1</dim>
+							</port>
+						</input>
+						<output>
+							<port id="2" precision="FP32">
+								<dim>1</dim>
+								<dim>-1</dim>
+								<dim>36</dim>
+							</port>
+						</output>
+					</layer>
+					<layer id="23" name="92/EltwiseUnsqueeze_input_port_1/value404903" type="Const" version="opset1">
+						<data element_type="i64" shape="1" offset="39100320" size="8" />
+						<rt_info>
+							<attribute name="fused_names" version="0" value="92/EltwiseUnsqueeze_input_port_1/value404903" />
+						</rt_info>
+						<output>
+							<port id="0" precision="I64">
+								<dim>1</dim>
+							</port>
+						</output>
+					</layer>
+					<layer id="24" name="92/EltwiseUnsqueeze" type="Unsqueeze" version="opset1">
+						<rt_info>
+							<attribute name="fused_names" version="0" value="92/EltwiseUnsqueeze" />
+						</rt_info>
+						<input>
+							<port id="0" precision="I32" />
+							<port id="1" precision="I64">
+								<dim>1</dim>
+							</port>
+						</input>
+						<output>
+							<port id="2" precision="I32">
+								<dim>1</dim>
+							</port>
+						</output>
+					</layer>
+					<layer id="25" name="dien/rnn_1/gru1/while/GreaterEqual_1" type="GreaterEqual" version="opset1">
+						<data auto_broadcast="numpy" />
+						<rt_info>
+							<attribute name="fused_names" version="0" value="dien/rnn_1/gru1/while/GreaterEqual_1" />
+						</rt_info>
+						<input>
+							<port id="0" precision="I32">
+								<dim>1</dim>
+							</port>
+							<port id="1" precision="I32">
+								<dim>-1</dim>
+							</port>
+						</input>
+						<output>
+							<port id="2" precision="BOOL" names="dien/rnn_1/gru1/while/GreaterEqual_1:0">
+								<dim>-1</dim>
+							</port>
+						</output>
+					</layer>
+					<layer id="26" name="dien/rnn_1/gru1/while/Select_1/Broadcast//value516909" type="Const" version="opset1">
+						<data element_type="i64" shape="1" offset="65710376" size="8" />
+						<rt_info>
+							<attribute name="fused_names" version="0" value="dien/rnn_1/gru1/while/Select_1/Broadcast//value516909" />
+						</rt_info>
+						<output>
+							<port id="0" precision="I64">
+								<dim>1</dim>
+							</port>
+						</output>
+					</layer>
+					<layer id="27" name="dien/rnn_1/gru1/while/Select_1/Broadcast/" type="Unsqueeze" version="opset1">
+						<rt_info>
+							<attribute name="fused_names" version="0" value="dien/rnn_1/gru1/while/Select_1/Broadcast/" />
+						</rt_info>
+						<input>
+							<port id="0" precision="BOOL">
+								<dim>-1</dim>
+							</port>
+							<port id="1" precision="I64">
+								<dim>1</dim>
+							</port>
+						</input>
+						<output>
+							<port id="2" precision="BOOL">
+								<dim>-1</dim>
+								<dim>1</dim>
+							</port>
+						</output>
+					</layer>
+					<layer id="28" name="dien/rnn_1/gru1/while/Select_1" type="Select" version="opset1">
+						<data auto_broadcast="numpy" />
+						<rt_info>
+							<attribute name="fused_names" version="0" value="dien/rnn_1/gru1/while/Select_1" />
+						</rt_info>
+						<input>
+							<port id="0" precision="BOOL">
+								<dim>-1</dim>
+								<dim>1</dim>
+							</port>
+							<port id="1" precision="FP32">
+								<dim>-1</dim>
+								<dim>36</dim>
+							</port>
+							<port id="2" precision="FP32">
+								<dim>-1</dim>
+								<dim>36</dim>
+							</port>
+						</input>
+						<output>
+							<port id="3" precision="FP32" names="dien/rnn_1/gru1/while/Select_1:0">
+								<dim>-1</dim>
+								<dim>36</dim>
+							</port>
+						</output>
+					</layer>
+					<layer id="29" name="dien/rnn_1/gru1/while/Select_1/Output_0/Data_/sink_port_0" type="Result" version="opset1">
+						<rt_info>
+							<attribute name="fused_names" version="0" value="dien/rnn_1/gru1/while/Select_1/Output_0/Data_/sink_port_0" />
+						</rt_info>
+						<input>
+							<port id="0" precision="FP32">
+								<dim>-1</dim>
+								<dim>36</dim>
+							</port>
+						</input>
+					</layer>
+					<layer id="22" name="72/sink_port_0" type="Result" version="opset1">
+						<rt_info>
+							<attribute name="fused_names" version="0" value="72/sink_port_0" />
+						</rt_info>
+						<input>
+							<port id="0" precision="FP32">
+								<dim>1</dim>
+								<dim>-1</dim>
+								<dim>36</dim>
+							</port>
+						</input>
+					</layer>
+					<layer id="7" name="dien/rnn_1/gru1/while/add/Output_0/Data_/sink_port_0" type="Result" version="opset1">
+						<rt_info>
+							<attribute name="fused_names" version="0" value="dien/rnn_1/gru1/while/add/Output_0/Data_/sink_port_0" />
+						</rt_info>
+						<input>
+							<port id="0" precision="I32" />
+						</input>
+					</layer>
+				</layers>
+				<edges>
+					<edge from-layer="0" from-port="0" to-layer="9" to-port="0" />
+					<edge from-layer="0" from-port="0" to-layer="24" to-port="0" />
+					<edge from-layer="0" from-port="0" to-layer="6" to-port="0" />
+					<edge from-layer="1" from-port="0" to-layer="10" to-port="1" />
+					<edge from-layer="1" from-port="0" to-layer="25" to-port="1" />
+					<edge from-layer="2" from-port="0" to-layer="19" to-port="1" />
+					<edge from-layer="3" from-port="0" to-layer="28" to-port="1" />
+					<edge from-layer="3" from-port="0" to-layer="18" to-port="1" />
+					<edge from-layer="4" from-port="0" to-layer="14" to-port="0" />
+					<edge from-layer="5" from-port="0" to-layer="6" to-port="1" />
+					<edge from-layer="6" from-port="2" to-layer="7" to-port="0" />
+					<edge from-layer="8" from-port="0" to-layer="9" to-port="1" />
+					<edge from-layer="9" from-port="2" to-layer="10" to-port="0" />
+					<edge from-layer="10" from-port="2" to-layer="12" to-port="0" />
+					<edge from-layer="11" from-port="0" to-layer="12" to-port="1" />
+					<edge from-layer="12" from-port="2" to-layer="19" to-port="0" />
+					<edge from-layer="13" from-port="0" to-layer="14" to-port="1" />
+					<edge from-layer="14" from-port="2" to-layer="18" to-port="0" />
+					<edge from-layer="15" from-port="0" to-layer="18" to-port="2" />
+					<edge from-layer="16" from-port="0" to-layer="18" to-port="3" />
+					<edge from-layer="17" from-port="0" to-layer="18" to-port="4" />
+					<edge from-layer="18" from-port="5" to-layer="19" to-port="2" />
+					<edge from-layer="18" from-port="5" to-layer="28" to-port="2" />
+					<edge from-layer="19" from-port="3" to-layer="21" to-port="0" />
+					<edge from-layer="20" from-port="0" to-layer="21" to-port="1" />
+					<edge from-layer="21" from-port="2" to-layer="22" to-port="0" />
+					<edge from-layer="23" from-port="0" to-layer="24" to-port="1" />
+					<edge from-layer="24" from-port="2" to-layer="25" to-port="0" />
+					<edge from-layer="25" from-port="2" to-layer="27" to-port="0" />
+					<edge from-layer="26" from-port="0" to-layer="27" to-port="1" />
+					<edge from-layer="27" from-port="2" to-layer="28" to-port="0" />
+					<edge from-layer="28" from-port="3" to-layer="29" to-port="0" />
+				</edges>
+				<rt_info />
+			</body>
+		</layer>
+		<layer id="73" name="dien/rnn_1/gru1/concat_1" type="Const" version="opset1">
+			<data element_type="i64" shape="3" offset="65715868" size="24" />
+			<output>
+				<port id="0" precision="I64" names="dien/rnn_1/gru1/concat_1:0">
+					<dim>3</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="74" name="dien/rnn_1/gru1/transpose" type="Transpose" version="opset1">
+			<input>
+				<port id="0" precision="FP32">
+					<dim>-1</dim>
+					<dim>-1</dim>
+					<dim>36</dim>
+				</port>
+				<port id="1" precision="I64">
+					<dim>3</dim>
+				</port>
+			</input>
+			<output>
+				<port id="2" precision="FP32">
+					<dim>-1</dim>
+					<dim>-1</dim>
+					<dim>36</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="75" name="dien/Attention_layer_1/Shape" type="ShapeOf" version="opset3">
+			<data output_type="i32" />
+			<input>
+				<port id="0" precision="FP32">
+					<dim>-1</dim>
+					<dim>-1</dim>
+					<dim>36</dim>
+				</port>
+			</input>
+			<output>
+				<port id="1" precision="I32" names="dien/Attention_layer_1/Shape:0,dien/Attention_layer_1/Shape_2:0,dien/Attention_layer_1/Shape_5:0">
+					<dim>3</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="76" name="dien/Attention_layer_1/strided_slice/stack" type="Const" version="opset1">
+			<data element_type="i64" shape="1" offset="65710376" size="8" />
+			<output>
+				<port id="0" precision="I64" names="dien/Attention_layer_1/strided_slice/stack:0">
+					<dim>1</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="77" name="dien/Attention_layer_1/strided_slice/stack_1" type="Const" version="opset1">
+			<data element_type="i64" shape="1" offset="65715892" size="8" />
+			<output>
+				<port id="0" precision="I64" names="dien/Attention_layer_1/strided_slice/stack_1:0">
+					<dim>1</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="78" name="dien/Attention_layer_1/strided_slice/stack_2" type="Const" version="opset1">
+			<data element_type="i64" shape="1" offset="65710376" size="8" />
+			<output>
+				<port id="0" precision="I64" names="dien/Attention_layer_1/strided_slice/stack_2:0">
+					<dim>1</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="79" name="dien/Attention_layer_1/strided_slice" type="StridedSlice" version="opset1">
+			<data begin_mask="0" end_mask="0" new_axis_mask="0" shrink_axis_mask="1" ellipsis_mask="0" />
+			<input>
+				<port id="0" precision="I32">
+					<dim>3</dim>
+				</port>
+				<port id="1" precision="I64">
+					<dim>1</dim>
+				</port>
+				<port id="2" precision="I64">
+					<dim>1</dim>
+				</port>
+				<port id="3" precision="I64">
+					<dim>1</dim>
+				</port>
+			</input>
+			<output>
+				<port id="4" precision="I32" names="dien/Attention_layer_1/strided_slice:0" />
+			</output>
+		</layer>
+		<layer id="80" name="dien/Attention_layer_1/Tile/multiples/Unsqueeze618_input_port_1/value" type="Const" version="opset1">
+			<data element_type="i64" shape="1" offset="39100320" size="8" />
+			<output>
+				<port id="0" precision="I64">
+					<dim>1</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="81" name="dien/Attention_layer_1/Tile/multiples/Unsqueeze618" type="Unsqueeze" version="opset1">
+			<input>
+				<port id="0" precision="I32" />
+				<port id="1" precision="I64">
+					<dim>1</dim>
+				</port>
+			</input>
+			<output>
+				<port id="2" precision="I32">
+					<dim>1</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="82" name="dien/Attention_layer_1/Tile/multiples" type="Concat" version="opset1">
+			<data axis="0" />
+			<input>
+				<port id="0" precision="I32">
+					<dim>1</dim>
+				</port>
+				<port id="1" precision="I32">
+					<dim>1</dim>
+				</port>
+			</input>
+			<output>
+				<port id="2" precision="I32" names="dien/Attention_layer_1/Tile/multiples:0">
+					<dim>2</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="83" name="dien/Attention_layer_1/Tile" type="Tile" version="opset1">
+			<input>
+				<port id="0" precision="FP32">
+					<dim>-1</dim>
+					<dim>36</dim>
+				</port>
+				<port id="1" precision="I32">
+					<dim>2</dim>
+				</port>
+			</input>
+			<output>
+				<port id="2" precision="FP32" names="dien/Attention_layer_1/Tile:0">
+					<dim>-1</dim>
+					<dim>-1</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="84" name="dien/Attention_layer_1/Reshape/Cast_1" type="Convert" version="opset1">
+			<data destination_type="i64" />
+			<input>
+				<port id="0" precision="I32">
+					<dim>3</dim>
+				</port>
+			</input>
+			<output>
+				<port id="1" precision="I64" names="dien/Attention_layer_1/Shape_1:0">
+					<dim>3</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="85" name="dien/Attention_layer_1/Reshape" type="Reshape" version="opset1">
+			<data special_zero="false" />
+			<input>
+				<port id="0" precision="FP32">
+					<dim>-1</dim>
+					<dim>-1</dim>
+				</port>
+				<port id="1" precision="I64">
+					<dim>3</dim>
+				</port>
+			</input>
+			<output>
+				<port id="2" precision="FP32" names="dien/Attention_layer_1/Reshape:0">
+					<dim>-1</dim>
+					<dim>-1</dim>
+					<dim>36</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="86" name="dien/Attention_layer_1/sub" type="Subtract" version="opset1">
+			<data auto_broadcast="numpy" />
+			<input>
+				<port id="0" precision="FP32">
+					<dim>-1</dim>
+					<dim>-1</dim>
+					<dim>36</dim>
+				</port>
+				<port id="1" precision="FP32">
+					<dim>-1</dim>
+					<dim>-1</dim>
+					<dim>36</dim>
+				</port>
+			</input>
+			<output>
+				<port id="2" precision="FP32" names="dien/Attention_layer_1/sub:0">
+					<dim>-1</dim>
+					<dim>-1</dim>
+					<dim>36</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="87" name="dien/Attention_layer_1/mul_1" type="Multiply" version="opset1">
+			<data auto_broadcast="numpy" />
+			<input>
+				<port id="0" precision="FP32">
+					<dim>-1</dim>
+					<dim>-1</dim>
+					<dim>36</dim>
+				</port>
+				<port id="1" precision="FP32">
+					<dim>-1</dim>
+					<dim>-1</dim>
+					<dim>36</dim>
+				</port>
+			</input>
+			<output>
+				<port id="2" precision="FP32" names="dien/Attention_layer_1/mul_1:0">
+					<dim>-1</dim>
+					<dim>-1</dim>
+					<dim>36</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="88" name="dien/Attention_layer_1/concat" type="Concat" version="opset1">
+			<data axis="2" />
+			<input>
+				<port id="0" precision="FP32">
+					<dim>-1</dim>
+					<dim>-1</dim>
+					<dim>36</dim>
+				</port>
+				<port id="1" precision="FP32">
+					<dim>-1</dim>
+					<dim>-1</dim>
+					<dim>36</dim>
+				</port>
+				<port id="2" precision="FP32">
+					<dim>-1</dim>
+					<dim>-1</dim>
+					<dim>36</dim>
+				</port>
+				<port id="3" precision="FP32">
+					<dim>-1</dim>
+					<dim>-1</dim>
+					<dim>36</dim>
+				</port>
+			</input>
+			<output>
+				<port id="4" precision="FP32" names="dien/Attention_layer_1/concat:0,dien/Attention_layer_1/f1_att1_1/Tensordot/transpose:0">
+					<dim>-1</dim>
+					<dim>-1</dim>
+					<dim>144</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="89" name="dien/Attention_layer_1/f1_att1_1/Tensordot/Reshape/Cast_1" type="Const" version="opset1">
+			<data element_type="i64" shape="2" offset="65747440" size="16" />
+			<output>
+				<port id="0" precision="I64" names="dien/Attention_layer_1/f1_att1_1/Tensordot/stack:0">
+					<dim>2</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="90" name="dien/Attention_layer_1/f1_att1_1/Tensordot/Reshape" type="Reshape" version="opset1">
+			<data special_zero="false" />
+			<input>
+				<port id="0" precision="FP32">
+					<dim>-1</dim>
+					<dim>-1</dim>
+					<dim>144</dim>
+				</port>
+				<port id="1" precision="I64">
+					<dim>2</dim>
+				</port>
+			</input>
+			<output>
+				<port id="2" precision="FP32" names="dien/Attention_layer_1/f1_att1_1/Tensordot/Reshape:0">
+					<dim>-1</dim>
+					<dim>144</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="91" name="dien/Attention_layer_1/f1_att1_1/Tensordot/Reshape_1" type="Const" version="opset1">
+			<data element_type="f32" shape="80, 144" offset="65747456" size="46080" />
+			<output>
+				<port id="0" precision="FP32" names="dien/Attention_layer_1/f1_att1_1/Tensordot/Reshape_1:0">
+					<dim>80</dim>
+					<dim>144</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="92" name="dien/Attention_layer_1/f1_att1_1/Tensordot/MatMul" type="MatMul" version="opset1">
+			<data transpose_a="false" transpose_b="true" />
+			<input>
+				<port id="0" precision="FP32">
+					<dim>-1</dim>
+					<dim>144</dim>
+				</port>
+				<port id="1" precision="FP32">
+					<dim>80</dim>
+					<dim>144</dim>
+				</port>
+			</input>
+			<output>
+				<port id="2" precision="FP32" names="dien/Attention_layer_1/f1_att1_1/Tensordot/MatMul:0">
+					<dim>-1</dim>
+					<dim>80</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="93" name="dien/Attention_layer_1/f1_att1_1/Tensordot/Shape" type="ShapeOf" version="opset3">
+			<data output_type="i32" />
+			<input>
+				<port id="0" precision="FP32">
+					<dim>-1</dim>
+					<dim>-1</dim>
+					<dim>144</dim>
+				</port>
+			</input>
+			<output>
+				<port id="1" precision="I32" names="dien/Attention_layer_1/f1_att1_1/Tensordot/Shape:0">
+					<dim>3</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="94" name="dien/Attention_layer_1/f1_att1_1/Tensordot/ListDiff" type="Const" version="opset1">
+			<data element_type="i32" shape="2" offset="65793536" size="8" />
+			<output>
+				<port id="0" precision="I32" names="dien/Attention_layer_1/f1_att1_1/Tensordot/ListDiff:0">
+					<dim>2</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="95" name="dien/Attention_layer_1/f1_att1_1/Tensordot/GatherV2/axis" type="Const" version="opset1">
+			<data element_type="i64" shape="" offset="39100320" size="8" />
+			<output>
+				<port id="0" precision="I64" names="dien/Attention_layer_1/f1_att1_1/Tensordot/GatherV2/axis:0" />
+			</output>
+		</layer>
+		<layer id="96" name="dien/Attention_layer_1/f1_att1_1/Tensordot/GatherV2" type="Gather" version="opset8">
+			<data batch_dims="0" />
+			<input>
+				<port id="0" precision="I32">
+					<dim>3</dim>
+				</port>
+				<port id="1" precision="I32">
+					<dim>2</dim>
+				</port>
+				<port id="2" precision="I64" />
+			</input>
+			<output>
+				<port id="3" precision="I32" names="dien/Attention_layer_1/f1_att1_1/Tensordot/GatherV2:0">
+					<dim>2</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="97" name="dien/Attention_layer_1/f1_att1_1/Tensordot/Const_2" type="Const" version="opset1">
+			<data element_type="i32" shape="1" offset="65793544" size="4" />
+			<output>
+				<port id="0" precision="I32" names="dien/Attention_layer_1/f1_att1_1/Tensordot/Const_2:0">
+					<dim>1</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="98" name="dien/Attention_layer_1/f1_att1_1/Tensordot/concat_2" type="Concat" version="opset1">
+			<data axis="0" />
+			<input>
+				<port id="0" precision="I32">
+					<dim>2</dim>
+				</port>
+				<port id="1" precision="I32">
+					<dim>1</dim>
+				</port>
+			</input>
+			<output>
+				<port id="2" precision="I32">
+					<dim>3</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="99" name="dien/Attention_layer_1/f1_att1_1/Tensordot/Cast_1" type="Convert" version="opset1">
+			<data destination_type="i64" />
+			<input>
+				<port id="0" precision="I32">
+					<dim>3</dim>
+				</port>
+			</input>
+			<output>
+				<port id="1" precision="I64" names="dien/Attention_layer_1/f1_att1_1/Tensordot/concat_2:0">
+					<dim>3</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="100" name="dien/Attention_layer_1/f1_att1_1/Tensordot" type="Reshape" version="opset1">
+			<data special_zero="false" />
+			<input>
+				<port id="0" precision="FP32">
+					<dim>-1</dim>
+					<dim>80</dim>
+				</port>
+				<port id="1" precision="I64">
+					<dim>3</dim>
+				</port>
+			</input>
+			<output>
+				<port id="2" precision="FP32" names="dien/Attention_layer_1/f1_att1_1/Tensordot:0">
+					<dim>-1</dim>
+					<dim>-1</dim>
+					<dim>80</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="101" name="dien/f1_att1_1/bias/read" type="Const" version="opset1">
+			<data element_type="f32" shape="1, 1, 80" offset="65793548" size="320" />
+			<output>
+				<port id="0" precision="FP32" names="dien/f1_att1_1/bias/read:0">
+					<dim>1</dim>
+					<dim>1</dim>
+					<dim>80</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="102" name="dien/Attention_layer_1/f1_att1_1/BiasAdd/Add" type="Add" version="opset1">
+			<data auto_broadcast="numpy" />
+			<input>
+				<port id="0" precision="FP32">
+					<dim>-1</dim>
+					<dim>-1</dim>
+					<dim>80</dim>
+				</port>
+				<port id="1" precision="FP32">
+					<dim>1</dim>
+					<dim>1</dim>
+					<dim>80</dim>
+				</port>
+			</input>
+			<output>
+				<port id="2" precision="FP32" names="dien/Attention_layer_1/f1_att1_1/BiasAdd:0">
+					<dim>-1</dim>
+					<dim>-1</dim>
+					<dim>80</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="103" name="dien/Attention_layer_1/f1_att1_1/Sigmoid" type="Sigmoid" version="opset1">
+			<input>
+				<port id="0" precision="FP32">
+					<dim>-1</dim>
+					<dim>-1</dim>
+					<dim>80</dim>
+				</port>
+			</input>
+			<output>
+				<port id="1" precision="FP32" names="dien/Attention_layer_1/f1_att1_1/Sigmoid:0,dien/Attention_layer_1/f2_att1_1/Tensordot/transpose:0">
+					<dim>-1</dim>
+					<dim>-1</dim>
+					<dim>80</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="104" name="dien/Attention_layer_1/f2_att1_1/Tensordot/Reshape/Cast_1" type="Const" version="opset1">
+			<data element_type="i64" shape="2" offset="65793868" size="16" />
+			<output>
+				<port id="0" precision="I64" names="dien/Attention_layer_1/f2_att1_1/Tensordot/stack:0">
+					<dim>2</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="105" name="dien/Attention_layer_1/f2_att1_1/Tensordot/Reshape" type="Reshape" version="opset1">
+			<data special_zero="false" />
+			<input>
+				<port id="0" precision="FP32">
+					<dim>-1</dim>
+					<dim>-1</dim>
+					<dim>80</dim>
+				</port>
+				<port id="1" precision="I64">
+					<dim>2</dim>
+				</port>
+			</input>
+			<output>
+				<port id="2" precision="FP32" names="dien/Attention_layer_1/f2_att1_1/Tensordot/Reshape:0">
+					<dim>-1</dim>
+					<dim>80</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="106" name="dien/Attention_layer_1/f2_att1_1/Tensordot/Reshape_1" type="Const" version="opset1">
+			<data element_type="f32" shape="40, 80" offset="65793884" size="12800" />
+			<output>
+				<port id="0" precision="FP32" names="dien/Attention_layer_1/f2_att1_1/Tensordot/Reshape_1:0">
+					<dim>40</dim>
+					<dim>80</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="107" name="dien/Attention_layer_1/f2_att1_1/Tensordot/MatMul" type="MatMul" version="opset1">
+			<data transpose_a="false" transpose_b="true" />
+			<input>
+				<port id="0" precision="FP32">
+					<dim>-1</dim>
+					<dim>80</dim>
+				</port>
+				<port id="1" precision="FP32">
+					<dim>40</dim>
+					<dim>80</dim>
+				</port>
+			</input>
+			<output>
+				<port id="2" precision="FP32" names="dien/Attention_layer_1/f2_att1_1/Tensordot/MatMul:0">
+					<dim>-1</dim>
+					<dim>40</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="108" name="dien/Attention_layer_1/f2_att1_1/Tensordot/Shape" type="ShapeOf" version="opset3">
+			<data output_type="i32" />
+			<input>
+				<port id="0" precision="FP32">
+					<dim>-1</dim>
+					<dim>-1</dim>
+					<dim>80</dim>
+				</port>
+			</input>
+			<output>
+				<port id="1" precision="I32" names="dien/Attention_layer_1/f2_att1_1/Tensordot/Shape:0">
+					<dim>3</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="109" name="dien/Attention_layer_1/f2_att1_1/Tensordot/ListDiff" type="Const" version="opset1">
+			<data element_type="i32" shape="2" offset="65793536" size="8" />
+			<output>
+				<port id="0" precision="I32" names="dien/Attention_layer_1/f2_att1_1/Tensordot/ListDiff:0">
+					<dim>2</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="110" name="dien/Attention_layer_1/f2_att1_1/Tensordot/GatherV2/axis" type="Const" version="opset1">
+			<data element_type="i64" shape="" offset="39100320" size="8" />
+			<output>
+				<port id="0" precision="I64" names="dien/Attention_layer_1/f2_att1_1/Tensordot/GatherV2/axis:0" />
+			</output>
+		</layer>
+		<layer id="111" name="dien/Attention_layer_1/f2_att1_1/Tensordot/GatherV2" type="Gather" version="opset8">
+			<data batch_dims="0" />
+			<input>
+				<port id="0" precision="I32">
+					<dim>3</dim>
+				</port>
+				<port id="1" precision="I32">
+					<dim>2</dim>
+				</port>
+				<port id="2" precision="I64" />
+			</input>
+			<output>
+				<port id="3" precision="I32" names="dien/Attention_layer_1/f2_att1_1/Tensordot/GatherV2:0">
+					<dim>2</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="112" name="dien/Attention_layer_1/f2_att1_1/Tensordot/Const_2" type="Const" version="opset1">
+			<data element_type="i32" shape="1" offset="65806684" size="4" />
+			<output>
+				<port id="0" precision="I32" names="dien/Attention_layer_1/f2_att1_1/Tensordot/Const_2:0">
+					<dim>1</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="113" name="dien/Attention_layer_1/f2_att1_1/Tensordot/concat_2" type="Concat" version="opset1">
+			<data axis="0" />
+			<input>
+				<port id="0" precision="I32">
+					<dim>2</dim>
+				</port>
+				<port id="1" precision="I32">
+					<dim>1</dim>
+				</port>
+			</input>
+			<output>
+				<port id="2" precision="I32">
+					<dim>3</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="114" name="dien/Attention_layer_1/f2_att1_1/Tensordot/Cast_1" type="Convert" version="opset1">
+			<data destination_type="i64" />
+			<input>
+				<port id="0" precision="I32">
+					<dim>3</dim>
+				</port>
+			</input>
+			<output>
+				<port id="1" precision="I64" names="dien/Attention_layer_1/f2_att1_1/Tensordot/concat_2:0">
+					<dim>3</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="115" name="dien/Attention_layer_1/f2_att1_1/Tensordot" type="Reshape" version="opset1">
+			<data special_zero="false" />
+			<input>
+				<port id="0" precision="FP32">
+					<dim>-1</dim>
+					<dim>40</dim>
+				</port>
+				<port id="1" precision="I64">
+					<dim>3</dim>
+				</port>
+			</input>
+			<output>
+				<port id="2" precision="FP32" names="dien/Attention_layer_1/f2_att1_1/Tensordot:0">
+					<dim>-1</dim>
+					<dim>-1</dim>
+					<dim>40</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="116" name="dien/f2_att1_1/bias/read" type="Const" version="opset1">
+			<data element_type="f32" shape="1, 1, 40" offset="65806688" size="160" />
+			<output>
+				<port id="0" precision="FP32" names="dien/f2_att1_1/bias/read:0">
+					<dim>1</dim>
+					<dim>1</dim>
+					<dim>40</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="117" name="dien/Attention_layer_1/f2_att1_1/BiasAdd/Add" type="Add" version="opset1">
+			<data auto_broadcast="numpy" />
+			<input>
+				<port id="0" precision="FP32">
+					<dim>-1</dim>
+					<dim>-1</dim>
+					<dim>40</dim>
+				</port>
+				<port id="1" precision="FP32">
+					<dim>1</dim>
+					<dim>1</dim>
+					<dim>40</dim>
+				</port>
+			</input>
+			<output>
+				<port id="2" precision="FP32" names="dien/Attention_layer_1/f2_att1_1/BiasAdd:0">
+					<dim>-1</dim>
+					<dim>-1</dim>
+					<dim>40</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="118" name="dien/Attention_layer_1/f2_att1_1/Sigmoid" type="Sigmoid" version="opset1">
+			<input>
+				<port id="0" precision="FP32">
+					<dim>-1</dim>
+					<dim>-1</dim>
+					<dim>40</dim>
+				</port>
+			</input>
+			<output>
+				<port id="1" precision="FP32" names="dien/Attention_layer_1/f2_att1_1/Sigmoid:0,dien/Attention_layer_1/f3_att1_1/Tensordot/transpose:0">
+					<dim>-1</dim>
+					<dim>-1</dim>
+					<dim>40</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="119" name="dien/Attention_layer_1/f3_att1_1/Tensordot/Reshape/Cast_1" type="Const" version="opset1">
+			<data element_type="i64" shape="2" offset="65806848" size="16" />
+			<output>
+				<port id="0" precision="I64" names="dien/Attention_layer_1/f3_att1_1/Tensordot/stack:0">
+					<dim>2</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="120" name="dien/Attention_layer_1/f3_att1_1/Tensordot/Reshape" type="Reshape" version="opset1">
+			<data special_zero="false" />
+			<input>
+				<port id="0" precision="FP32">
+					<dim>-1</dim>
+					<dim>-1</dim>
+					<dim>40</dim>
+				</port>
+				<port id="1" precision="I64">
+					<dim>2</dim>
+				</port>
+			</input>
+			<output>
+				<port id="2" precision="FP32" names="dien/Attention_layer_1/f3_att1_1/Tensordot/Reshape:0">
+					<dim>-1</dim>
+					<dim>40</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="121" name="dien/Attention_layer_1/f3_att1_1/Tensordot/Reshape_1" type="Const" version="opset1">
+			<data element_type="f32" shape="1, 40" offset="65806864" size="160" />
+			<output>
+				<port id="0" precision="FP32" names="dien/Attention_layer_1/f3_att1_1/Tensordot/Reshape_1:0">
+					<dim>1</dim>
+					<dim>40</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="122" name="dien/Attention_layer_1/f3_att1_1/Tensordot/MatMul" type="MatMul" version="opset1">
+			<data transpose_a="false" transpose_b="true" />
+			<input>
+				<port id="0" precision="FP32">
+					<dim>-1</dim>
+					<dim>40</dim>
+				</port>
+				<port id="1" precision="FP32">
+					<dim>1</dim>
+					<dim>40</dim>
+				</port>
+			</input>
+			<output>
+				<port id="2" precision="FP32" names="dien/Attention_layer_1/f3_att1_1/Tensordot/MatMul:0">
+					<dim>-1</dim>
+					<dim>1</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="123" name="dien/Attention_layer_1/f3_att1_1/Tensordot/Shape" type="ShapeOf" version="opset3">
+			<data output_type="i32" />
+			<input>
+				<port id="0" precision="FP32">
+					<dim>-1</dim>
+					<dim>-1</dim>
+					<dim>40</dim>
+				</port>
+			</input>
+			<output>
+				<port id="1" precision="I32" names="dien/Attention_layer_1/f3_att1_1/Tensordot/Shape:0">
+					<dim>3</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="124" name="dien/Attention_layer_1/f3_att1_1/Tensordot/ListDiff" type="Const" version="opset1">
+			<data element_type="i32" shape="2" offset="65793536" size="8" />
+			<output>
+				<port id="0" precision="I32" names="dien/Attention_layer_1/f3_att1_1/Tensordot/ListDiff:0">
+					<dim>2</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="125" name="dien/Attention_layer_1/f3_att1_1/Tensordot/GatherV2/axis" type="Const" version="opset1">
+			<data element_type="i64" shape="" offset="39100320" size="8" />
+			<output>
+				<port id="0" precision="I64" names="dien/Attention_layer_1/f3_att1_1/Tensordot/GatherV2/axis:0" />
+			</output>
+		</layer>
+		<layer id="126" name="dien/Attention_layer_1/f3_att1_1/Tensordot/GatherV2" type="Gather" version="opset8">
+			<data batch_dims="0" />
+			<input>
+				<port id="0" precision="I32">
+					<dim>3</dim>
+				</port>
+				<port id="1" precision="I32">
+					<dim>2</dim>
+				</port>
+				<port id="2" precision="I64" />
+			</input>
+			<output>
+				<port id="3" precision="I32" names="dien/Attention_layer_1/f3_att1_1/Tensordot/GatherV2:0">
+					<dim>2</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="127" name="dien/Attention_layer_1/f3_att1_1/Tensordot/Const_2" type="Const" version="opset1">
+			<data element_type="i32" shape="1" offset="65715864" size="4" />
+			<output>
+				<port id="0" precision="I32" names="dien/Attention_layer_1/f3_att1_1/Tensordot/Const_2:0">
+					<dim>1</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="128" name="dien/Attention_layer_1/f3_att1_1/Tensordot/concat_2" type="Concat" version="opset1">
+			<data axis="0" />
+			<input>
+				<port id="0" precision="I32">
+					<dim>2</dim>
+				</port>
+				<port id="1" precision="I32">
+					<dim>1</dim>
+				</port>
+			</input>
+			<output>
+				<port id="2" precision="I32">
+					<dim>3</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="129" name="dien/Attention_layer_1/f3_att1_1/Tensordot/Cast_1" type="Convert" version="opset1">
+			<data destination_type="i64" />
+			<input>
+				<port id="0" precision="I32">
+					<dim>3</dim>
+				</port>
+			</input>
+			<output>
+				<port id="1" precision="I64" names="dien/Attention_layer_1/f3_att1_1/Tensordot/concat_2:0">
+					<dim>3</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="130" name="dien/Attention_layer_1/f3_att1_1/Tensordot" type="Reshape" version="opset1">
+			<data special_zero="false" />
+			<input>
+				<port id="0" precision="FP32">
+					<dim>-1</dim>
+					<dim>1</dim>
+				</port>
+				<port id="1" precision="I64">
+					<dim>3</dim>
+				</port>
+			</input>
+			<output>
+				<port id="2" precision="FP32" names="dien/Attention_layer_1/f3_att1_1/Tensordot:0">
+					<dim>-1</dim>
+					<dim>-1</dim>
+					<dim>1</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="131" name="dien/f3_att1_1/bias/read" type="Const" version="opset1">
+			<data element_type="f32" shape="1, 1, 1" offset="65807024" size="4" />
+			<output>
+				<port id="0" precision="FP32" names="dien/f3_att1_1/bias/read:0">
+					<dim>1</dim>
+					<dim>1</dim>
+					<dim>1</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="132" name="dien/Attention_layer_1/f3_att1_1/BiasAdd/Add" type="Add" version="opset1">
+			<data auto_broadcast="numpy" />
+			<input>
+				<port id="0" precision="FP32">
+					<dim>-1</dim>
+					<dim>-1</dim>
+					<dim>1</dim>
+				</port>
+				<port id="1" precision="FP32">
+					<dim>1</dim>
+					<dim>1</dim>
+					<dim>1</dim>
+				</port>
+			</input>
+			<output>
+				<port id="2" precision="FP32" names="dien/Attention_layer_1/f3_att1_1/BiasAdd:0">
+					<dim>-1</dim>
+					<dim>-1</dim>
+					<dim>1</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="133" name="dien/Attention_layer_1/Reshape_1/shape/Unsqueeze" type="Const" version="opset1">
+			<data element_type="i32" shape="1" offset="65807028" size="4" />
+			<output>
+				<port id="0" precision="I32">
+					<dim>1</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="134" name="dien/Attention_layer_1/Reshape_1/shape/Unsqueeze636" type="Const" version="opset1">
+			<data element_type="i32" shape="1" offset="65715864" size="4" />
+			<output>
+				<port id="0" precision="I32">
+					<dim>1</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="135" name="dien/Attention_layer_1/strided_slice_1/stack" type="Const" version="opset1">
+			<data element_type="i64" shape="1" offset="65710376" size="8" />
+			<output>
+				<port id="0" precision="I64" names="dien/Attention_layer_1/strided_slice_1/stack:0">
+					<dim>1</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="136" name="dien/Attention_layer_1/strided_slice_1/stack_1" type="Const" version="opset1">
+			<data element_type="i64" shape="1" offset="65715892" size="8" />
+			<output>
+				<port id="0" precision="I64" names="dien/Attention_layer_1/strided_slice_1/stack_1:0">
+					<dim>1</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="137" name="dien/Attention_layer_1/strided_slice_1/stack_2" type="Const" version="opset1">
+			<data element_type="i64" shape="1" offset="65710376" size="8" />
+			<output>
+				<port id="0" precision="I64" names="dien/Attention_layer_1/strided_slice_1/stack_2:0">
+					<dim>1</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="138" name="dien/Attention_layer_1/strided_slice_1" type="StridedSlice" version="opset1">
+			<data begin_mask="0" end_mask="0" new_axis_mask="0" shrink_axis_mask="1" ellipsis_mask="0" />
+			<input>
+				<port id="0" precision="I32">
+					<dim>3</dim>
+				</port>
+				<port id="1" precision="I64">
+					<dim>1</dim>
+				</port>
+				<port id="2" precision="I64">
+					<dim>1</dim>
+				</port>
+				<port id="3" precision="I64">
+					<dim>1</dim>
+				</port>
+			</input>
+			<output>
+				<port id="4" precision="I32" names="dien/Attention_layer_1/strided_slice_1:0" />
+			</output>
+		</layer>
+		<layer id="139" name="dien/Attention_layer_1/Reshape_1/shape/Unsqueeze638_input_port_1/value" type="Const" version="opset1">
+			<data element_type="i64" shape="1" offset="39100320" size="8" />
+			<output>
+				<port id="0" precision="I64">
+					<dim>1</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="140" name="dien/Attention_layer_1/Reshape_1/shape/Unsqueeze638" type="Unsqueeze" version="opset1">
+			<input>
+				<port id="0" precision="I32" />
+				<port id="1" precision="I64">
+					<dim>1</dim>
+				</port>
+			</input>
+			<output>
+				<port id="2" precision="I32">
+					<dim>1</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="141" name="dien/Attention_layer_1/Reshape_1/shape" type="Concat" version="opset1">
+			<data axis="0" />
+			<input>
+				<port id="0" precision="I32">
+					<dim>1</dim>
+				</port>
+				<port id="1" precision="I32">
+					<dim>1</dim>
+				</port>
+				<port id="2" precision="I32">
+					<dim>1</dim>
+				</port>
+			</input>
+			<output>
+				<port id="3" precision="I32">
+					<dim>3</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="142" name="dien/Attention_layer_1/Reshape_1/Cast_1" type="Convert" version="opset1">
+			<data destination_type="i64" />
+			<input>
+				<port id="0" precision="I32">
+					<dim>3</dim>
+				</port>
+			</input>
+			<output>
+				<port id="1" precision="I64" names="dien/Attention_layer_1/Reshape_1/shape:0">
+					<dim>3</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="143" name="dien/Attention_layer_1/Reshape_1" type="Reshape" version="opset1">
+			<data special_zero="false" />
+			<input>
+				<port id="0" precision="FP32">
+					<dim>-1</dim>
+					<dim>-1</dim>
+					<dim>1</dim>
+				</port>
+				<port id="1" precision="I64">
+					<dim>3</dim>
+				</port>
+			</input>
+			<output>
+				<port id="2" precision="FP32" names="dien/Attention_layer_1/Reshape_1:0">
+					<dim>-1</dim>
+					<dim>1</dim>
+					<dim>-1</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="144" name="dien/Attention_layer_1/ones_like_1/Const" type="Const" version="opset1">
+			<data element_type="f32" shape="" offset="65710384" size="4" />
+			<output>
+				<port id="0" precision="FP32" names="dien/Attention_layer_1/ones_like_1/Const:0" />
+			</output>
+		</layer>
+		<layer id="145" name="dien/Attention_layer_1/ones_like_1/Shape" type="ShapeOf" version="opset3">
+			<data output_type="i32" />
+			<input>
+				<port id="0" precision="FP32">
+					<dim>-1</dim>
+					<dim>1</dim>
+					<dim>-1</dim>
+				</port>
+			</input>
+			<output>
+				<port id="1" precision="I32">
+					<dim>3</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="146" name="dien/Attention_layer_1/ones_like_1/Broadcast/Cast_1" type="Convert" version="opset1">
+			<data destination_type="i64" />
+			<input>
+				<port id="0" precision="I32">
+					<dim>3</dim>
+				</port>
+			</input>
+			<output>
+				<port id="1" precision="I64" names="dien/Attention_layer_1/ones_like_1/Shape:0">
+					<dim>3</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="147" name="dien/Attention_layer_1/ones_like_1/Broadcast" type="Broadcast" version="opset3">
+			<data mode="numpy" />
+			<input>
+				<port id="0" precision="FP32" />
+				<port id="1" precision="I64">
+					<dim>3</dim>
+				</port>
+			</input>
+			<output>
+				<port id="2" precision="FP32" names="dien/Attention_layer_1/ones_like_1:0">
+					<dim>-1</dim>
+					<dim>1</dim>
+					<dim>-1</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="148" name="dien/Attention_layer_1/mul_2/y" type="Const" version="opset1">
+			<data element_type="f32" shape="1, 1, 1" offset="65807032" size="4" />
+			<output>
+				<port id="0" precision="FP32" names="dien/Attention_layer_1/mul_2/y:0">
+					<dim>1</dim>
+					<dim>1</dim>
+					<dim>1</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="149" name="dien/Attention_layer_1/mul_2" type="Multiply" version="opset1">
+			<data auto_broadcast="numpy" />
+			<input>
+				<port id="0" precision="FP32">
+					<dim>-1</dim>
+					<dim>1</dim>
+					<dim>-1</dim>
+				</port>
+				<port id="1" precision="FP32">
+					<dim>1</dim>
+					<dim>1</dim>
+					<dim>1</dim>
+				</port>
+			</input>
+			<output>
+				<port id="2" precision="FP32" names="dien/Attention_layer_1/mul_2:0">
+					<dim>-1</dim>
+					<dim>1</dim>
+					<dim>-1</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="150" name="dien/Attention_layer_1/Select" type="Select" version="opset1">
+			<data auto_broadcast="numpy" />
+			<input>
+				<port id="0" precision="BOOL">
+					<dim>-1</dim>
+					<dim>1</dim>
+					<dim>-1</dim>
+				</port>
+				<port id="1" precision="FP32">
+					<dim>-1</dim>
+					<dim>1</dim>
+					<dim>-1</dim>
+				</port>
+				<port id="2" precision="FP32">
+					<dim>-1</dim>
+					<dim>1</dim>
+					<dim>-1</dim>
+				</port>
+			</input>
+			<output>
+				<port id="3" precision="FP32" names="dien/Attention_layer_1/Select:0">
+					<dim>-1</dim>
+					<dim>1</dim>
+					<dim>-1</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="151" name="dien/Attention_layer_1/concat_1/values_0" type="Const" version="opset1">
+			<data element_type="i32" shape="1" offset="65807028" size="4" />
+			<output>
+				<port id="0" precision="I32" names="dien/Attention_layer_1/concat_1/values_0:0">
+					<dim>1</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="152" name="dien/Attention_layer_1/Shape_4" type="ShapeOf" version="opset3">
+			<data output_type="i32" />
+			<input>
+				<port id="0" precision="FP32">
+					<dim>-1</dim>
+					<dim>1</dim>
+					<dim>-1</dim>
+				</port>
+			</input>
+			<output>
+				<port id="1" precision="I32" names="dien/Attention_layer_1/Shape_4:0">
+					<dim>3</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="153" name="dien/Attention_layer_1/Slice/Concat339010934" type="Const" version="opset1">
+			<data element_type="i64" shape="1" offset="65715892" size="8" />
+			<output>
+				<port id="0" precision="I64">
+					<dim>1</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="154" name="dien/Attention_layer_1/Slice/Gather3381" type="Const" version="opset1">
+			<data element_type="i64" shape="1" offset="65807036" size="8" />
+			<output>
+				<port id="0" precision="I64">
+					<dim>1</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="155" name="dien/Attention_layer_1/Slice/Strides339210877" type="Const" version="opset1">
+			<data element_type="i64" shape="1" offset="65710376" size="8" />
+			<output>
+				<port id="0" precision="I64">
+					<dim>1</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="156" name="dien/Attention_layer_1/Slice" type="StridedSlice" version="opset1">
+			<data begin_mask="0" end_mask="0" new_axis_mask="0" shrink_axis_mask="0" ellipsis_mask="0" />
+			<input>
+				<port id="0" precision="I32">
+					<dim>3</dim>
+				</port>
+				<port id="1" precision="I64">
+					<dim>1</dim>
+				</port>
+				<port id="2" precision="I64">
+					<dim>1</dim>
+				</port>
+				<port id="3" precision="I64">
+					<dim>1</dim>
+				</port>
+			</input>
+			<output>
+				<port id="4" precision="I32" names="dien/Attention_layer_1/Slice:0">
+					<dim>1</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="157" name="dien/Attention_layer_1/concat_1" type="Concat" version="opset1">
+			<data axis="0" />
+			<input>
+				<port id="0" precision="I32">
+					<dim>1</dim>
+				</port>
+				<port id="1" precision="I32">
+					<dim>1</dim>
+				</port>
+			</input>
+			<output>
+				<port id="2" precision="I32">
+					<dim>2</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="158" name="dien/Attention_layer_1/Reshape_2/Cast_1" type="Convert" version="opset1">
+			<data destination_type="i64" />
+			<input>
+				<port id="0" precision="I32">
+					<dim>2</dim>
+				</port>
+			</input>
+			<output>
+				<port id="1" precision="I64" names="dien/Attention_layer_1/concat_1:0">
+					<dim>2</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="159" name="dien/Attention_layer_1/Reshape_2" type="Reshape" version="opset1">
+			<data special_zero="false" />
+			<input>
+				<port id="0" precision="FP32">
+					<dim>-1</dim>
+					<dim>1</dim>
+					<dim>-1</dim>
+				</port>
+				<port id="1" precision="I64">
+					<dim>2</dim>
+				</port>
+			</input>
+			<output>
+				<port id="2" precision="FP32" names="dien/Attention_layer_1/Reshape_2:0">
+					<dim>-1</dim>
+					<dim>-1</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="160" name="dien/Attention_layer_1/Softmax" type="SoftMax" version="opset8">
+			<data axis="-1" />
+			<input>
+				<port id="0" precision="FP32">
+					<dim>-1</dim>
+					<dim>-1</dim>
+				</port>
+			</input>
+			<output>
+				<port id="1" precision="FP32" names="dien/Attention_layer_1/Softmax:0">
+					<dim>-1</dim>
+					<dim>-1</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="161" name="dien/Attention_layer_1/Reshape_3/Cast_1" type="Convert" version="opset1">
+			<data destination_type="i64" />
+			<input>
+				<port id="0" precision="I32">
+					<dim>3</dim>
+				</port>
+			</input>
+			<output>
+				<port id="1" precision="I64" names="dien/Attention_layer_1/Shape_3:0">
+					<dim>3</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="162" name="dien/Attention_layer_1/Reshape_3" type="Reshape" version="opset1">
+			<data special_zero="false" />
+			<input>
+				<port id="0" precision="FP32">
+					<dim>-1</dim>
+					<dim>-1</dim>
+				</port>
+				<port id="1" precision="I64">
+					<dim>3</dim>
+				</port>
+			</input>
+			<output>
+				<port id="2" precision="FP32" names="dien/Attention_layer_1/Reshape_3:0">
+					<dim>-1</dim>
+					<dim>1</dim>
+					<dim>-1</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="163" name="dien/Attention_layer_1/Reshape_4/shape/Unsqueeze" type="Const" version="opset1">
+			<data element_type="i32" shape="1" offset="65807028" size="4" />
+			<output>
+				<port id="0" precision="I32">
+					<dim>1</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="164" name="dien/Attention_layer_1/strided_slice_2/stack" type="Const" version="opset1">
+			<data element_type="i64" shape="1" offset="65710376" size="8" />
+			<output>
+				<port id="0" precision="I64" names="dien/Attention_layer_1/strided_slice_2/stack:0">
+					<dim>1</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="165" name="dien/Attention_layer_1/strided_slice_2/stack_1" type="Const" version="opset1">
+			<data element_type="i64" shape="1" offset="65715892" size="8" />
+			<output>
+				<port id="0" precision="I64" names="dien/Attention_layer_1/strided_slice_2/stack_1:0">
+					<dim>1</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="166" name="dien/Attention_layer_1/strided_slice_2/stack_2" type="Const" version="opset1">
+			<data element_type="i64" shape="1" offset="65710376" size="8" />
+			<output>
+				<port id="0" precision="I64" names="dien/Attention_layer_1/strided_slice_2/stack_2:0">
+					<dim>1</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="167" name="dien/Attention_layer_1/strided_slice_2" type="StridedSlice" version="opset1">
+			<data begin_mask="0" end_mask="0" new_axis_mask="0" shrink_axis_mask="1" ellipsis_mask="0" />
+			<input>
+				<port id="0" precision="I32">
+					<dim>3</dim>
+				</port>
+				<port id="1" precision="I64">
+					<dim>1</dim>
+				</port>
+				<port id="2" precision="I64">
+					<dim>1</dim>
+				</port>
+				<port id="3" precision="I64">
+					<dim>1</dim>
+				</port>
+			</input>
+			<output>
+				<port id="4" precision="I32" names="dien/Attention_layer_1/strided_slice_2:0" />
+			</output>
+		</layer>
+		<layer id="168" name="dien/Attention_layer_1/Reshape_4/shape/Unsqueeze643_input_port_1/value" type="Const" version="opset1">
+			<data element_type="i64" shape="1" offset="39100320" size="8" />
+			<output>
+				<port id="0" precision="I64">
+					<dim>1</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="169" name="dien/Attention_layer_1/Reshape_4/shape/Unsqueeze643" type="Unsqueeze" version="opset1">
+			<input>
+				<port id="0" precision="I32" />
+				<port id="1" precision="I64">
+					<dim>1</dim>
+				</port>
+			</input>
+			<output>
+				<port id="2" precision="I32">
+					<dim>1</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="170" name="dien/Attention_layer_1/Reshape_4/shape" type="Concat" version="opset1">
+			<data axis="0" />
+			<input>
+				<port id="0" precision="I32">
+					<dim>1</dim>
+				</port>
+				<port id="1" precision="I32">
+					<dim>1</dim>
+				</port>
+			</input>
+			<output>
+				<port id="2" precision="I32">
+					<dim>2</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="171" name="dien/Attention_layer_1/Reshape_4/Cast_1" type="Convert" version="opset1">
+			<data destination_type="i64" />
+			<input>
+				<port id="0" precision="I32">
+					<dim>2</dim>
+				</port>
+			</input>
+			<output>
+				<port id="1" precision="I64" names="dien/Attention_layer_1/Reshape_4/shape:0">
+					<dim>2</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="172" name="dien/Attention_layer_1/Reshape_4" type="Reshape" version="opset1">
+			<data special_zero="false" />
+			<input>
+				<port id="0" precision="FP32">
+					<dim>-1</dim>
+					<dim>1</dim>
+					<dim>-1</dim>
+				</port>
+				<port id="1" precision="I64">
+					<dim>2</dim>
+				</port>
+			</input>
+			<output>
+				<port id="2" precision="FP32" names="dien/Attention_layer_1/Reshape_4:0">
+					<dim>-1</dim>
+					<dim>-1</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="173" name="dien/rnn_2/ExpandDims/dim" type="Const" version="opset1">
+			<data element_type="i64" shape="1" offset="65715892" size="8" />
+			<output>
+				<port id="0" precision="I64" names="dien/rnn_2/ExpandDims/dim:0">
+					<dim>1</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="174" name="dien/rnn_2/ExpandDims" type="Unsqueeze" version="opset1">
+			<input>
+				<port id="0" precision="FP32">
+					<dim>-1</dim>
+					<dim>-1</dim>
+				</port>
+				<port id="1" precision="I64">
+					<dim>1</dim>
+				</port>
+			</input>
+			<output>
+				<port id="2" precision="FP32" names="dien/rnn_2/ExpandDims:0">
+					<dim>-1</dim>
+					<dim>-1</dim>
+					<dim>1</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="175" name="dien/rnn_2/concat" type="Const" version="opset1">
+			<data element_type="i64" shape="3" offset="65715868" size="24" />
+			<output>
+				<port id="0" precision="I64" names="dien/rnn_2/concat:0">
+					<dim>3</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="176" name="dien/rnn_2/transpose" type="Transpose" version="opset1">
+			<input>
+				<port id="0" precision="FP32">
+					<dim>-1</dim>
+					<dim>-1</dim>
+					<dim>36</dim>
+				</port>
+				<port id="1" precision="I64">
+					<dim>3</dim>
+				</port>
+			</input>
+			<output>
+				<port id="2" precision="FP32" names="dien/rnn_2/transpose:0">
+					<dim>-1</dim>
+					<dim>-1</dim>
+					<dim>36</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="177" name="dien/rnn_2/gru2/VecAttGRUCellZeroState/zeros/Const" type="Const" version="opset1">
+			<data element_type="f32" shape="" offset="65710388" size="4" />
+			<output>
+				<port id="0" precision="FP32" names="dien/rnn_2/gru2/VecAttGRUCellZeroState/zeros/Const:0" />
+			</output>
+		</layer>
+		<layer id="178" name="dien/rnn_2/gru2/Shape" type="ShapeOf" version="opset3">
+			<data output_type="i32" />
+			<input>
+				<port id="0" precision="FP32">
+					<dim>-1</dim>
+					<dim>-1</dim>
+					<dim>36</dim>
+				</port>
+			</input>
+			<output>
+				<port id="1" precision="I32" names="dien/rnn_2/gru2/Shape:0">
+					<dim>3</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="179" name="dien/rnn_2/gru2/strided_slice/stack" type="Const" version="opset1">
+			<data element_type="i64" shape="1" offset="65710376" size="8" />
+			<output>
+				<port id="0" precision="I64" names="dien/rnn_2/gru2/strided_slice/stack:0">
+					<dim>1</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="180" name="dien/rnn_2/gru2/strided_slice/stack_1" type="Const" version="opset1">
+			<data element_type="i64" shape="1" offset="65715892" size="8" />
+			<output>
+				<port id="0" precision="I64" names="dien/rnn_2/gru2/strided_slice/stack_1:0">
+					<dim>1</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="181" name="dien/rnn_2/gru2/strided_slice/stack_2" type="Const" version="opset1">
+			<data element_type="i64" shape="1" offset="65710376" size="8" />
+			<output>
+				<port id="0" precision="I64" names="dien/rnn_2/gru2/strided_slice/stack_2:0">
+					<dim>1</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="182" name="dien/rnn_2/gru2/strided_slice" type="StridedSlice" version="opset1">
+			<data begin_mask="0" end_mask="0" new_axis_mask="0" shrink_axis_mask="1" ellipsis_mask="0" />
+			<input>
+				<port id="0" precision="I32">
+					<dim>3</dim>
+				</port>
+				<port id="1" precision="I64">
+					<dim>1</dim>
+				</port>
+				<port id="2" precision="I64">
+					<dim>1</dim>
+				</port>
+				<port id="3" precision="I64">
+					<dim>1</dim>
+				</port>
+			</input>
+			<output>
+				<port id="4" precision="I32" names="dien/rnn_2/gru2/strided_slice:0" />
+			</output>
+		</layer>
+		<layer id="183" name="dien/rnn_2/gru2/VecAttGRUCellZeroState/ExpandDims/dim" type="Const" version="opset1">
+			<data element_type="i64" shape="1" offset="39100320" size="8" />
+			<output>
+				<port id="0" precision="I64" names="dien/rnn_2/gru2/VecAttGRUCellZeroState/ExpandDims/dim:0">
+					<dim>1</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="184" name="dien/rnn_2/gru2/VecAttGRUCellZeroState/ExpandDims" type="Unsqueeze" version="opset1">
+			<input>
+				<port id="0" precision="I32" />
+				<port id="1" precision="I64">
+					<dim>1</dim>
+				</port>
+			</input>
+			<output>
+				<port id="2" precision="I32" names="dien/rnn_2/gru2/VecAttGRUCellZeroState/ExpandDims:0">
+					<dim>1</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="185" name="dien/rnn_2/gru2/VecAttGRUCellZeroState/Const" type="Const" version="opset1">
+			<data element_type="i32" shape="1" offset="65715900" size="4" />
+			<output>
+				<port id="0" precision="I32" names="dien/rnn_2/gru2/VecAttGRUCellZeroState/Const:0">
+					<dim>1</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="186" name="dien/rnn_2/gru2/VecAttGRUCellZeroState/concat" type="Concat" version="opset1">
+			<data axis="0" />
+			<input>
+				<port id="0" precision="I32">
+					<dim>1</dim>
+				</port>
+				<port id="1" precision="I32">
+					<dim>1</dim>
+				</port>
+			</input>
+			<output>
+				<port id="2" precision="I32">
+					<dim>2</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="187" name="dien/rnn_2/gru2/VecAttGRUCellZeroState/zeros/Broadcast/Cast_1" type="Convert" version="opset1">
+			<data destination_type="i64" />
+			<input>
+				<port id="0" precision="I32">
+					<dim>2</dim>
+				</port>
+			</input>
+			<output>
+				<port id="1" precision="I64" names="dien/rnn_2/gru2/VecAttGRUCellZeroState/concat:0">
+					<dim>2</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="188" name="dien/rnn_2/gru2/VecAttGRUCellZeroState/zeros/Broadcast" type="Broadcast" version="opset3">
+			<data mode="numpy" />
+			<input>
+				<port id="0" precision="FP32" />
+				<port id="1" precision="I64">
+					<dim>2</dim>
+				</port>
+			</input>
+			<output>
+				<port id="2" precision="FP32" names="dien/rnn_2/gru2/VecAttGRUCellZeroState/zeros:0">
+					<dim>-1</dim>
+					<dim>36</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="189" name="dien/rnn_2/gru2/while/Enter" type="Const" version="opset1">
+			<data element_type="i32" shape="" offset="65710388" size="4" />
+			<output>
+				<port id="0" precision="I32" names="dien/rnn_2/gru2/while/Enter:0" />
+			</output>
+		</layer>
+		<layer id="190" name="dien/rnn_2/gru2/while/LoopCond/TensorIteratorCondition_/TensorIterator" type="TensorIterator" version="opset1">
+			<port_map>
+				<input axis="1" external_port_id="0" internal_layer_id="4" start="0" end="-1" stride="1" part_size="1" />
+				<input axis="0" external_port_id="1" internal_layer_id="3" start="0" end="-1" stride="1" part_size="1" />
+				<input external_port_id="2" internal_layer_id="2" />
+				<input external_port_id="3" internal_layer_id="1" />
+				<input external_port_id="4" internal_layer_id="0" />
+				<output external_port_id="5" internal_layer_id="41" />
+			</port_map>
+			<back_edges>
+				<edge from-layer="41" to-layer="2" />
+				<edge from-layer="7" to-layer="0" />
+			</back_edges>
+			<input>
+				<port id="0" precision="FP32">
+					<dim>-1</dim>
+					<dim>-1</dim>
+					<dim>1</dim>
+				</port>
+				<port id="1" precision="FP32">
+					<dim>-1</dim>
+					<dim>-1</dim>
+					<dim>36</dim>
+				</port>
+				<port id="2" precision="FP32">
+					<dim>-1</dim>
+					<dim>36</dim>
+				</port>
+				<port id="3" precision="I32">
+					<dim>-1</dim>
+				</port>
+				<port id="4" precision="I32" />
+			</input>
+			<output>
+				<port id="5" precision="FP32" names="dien/rnn_2/gru2/while/Exit_2:0">
+					<dim>-1</dim>
+					<dim>36</dim>
+				</port>
+			</output>
+			<body>
+				<layers>
+					<layer id="4" name="75" type="Parameter" version="opset1">
+						<data shape="?,1,1" element_type="f32" />
+						<rt_info>
+							<attribute name="fused_names" version="0" value="75" />
+						</rt_info>
+						<output>
+							<port id="0" precision="FP32">
+								<dim>-1</dim>
+								<dim>1</dim>
+								<dim>1</dim>
+							</port>
+						</output>
+					</layer>
+					<layer id="3" name="77" type="Parameter" version="opset1">
+						<data shape="1,?,36" element_type="f32" />
+						<rt_info>
+							<attribute name="fused_names" version="0" value="77" />
+						</rt_info>
+						<output>
+							<port id="0" precision="FP32">
+								<dim>1</dim>
+								<dim>-1</dim>
+								<dim>36</dim>
+							</port>
+						</output>
+					</layer>
+					<layer id="2" name="85" type="Parameter" version="opset1">
+						<data shape="?,36" element_type="f32" />
+						<rt_info>
+							<attribute name="fused_names" version="0" value="85" />
+						</rt_info>
+						<output>
+							<port id="0" precision="FP32">
+								<dim>-1</dim>
+								<dim>36</dim>
+							</port>
+						</output>
+					</layer>
+					<layer id="1" name="87" type="Parameter" version="opset1">
+						<data shape="?" element_type="i32" />
+						<rt_info>
+							<attribute name="fused_names" version="0" value="87" />
+						</rt_info>
+						<output>
+							<port id="0" precision="I32">
+								<dim>-1</dim>
+							</port>
+						</output>
+					</layer>
+					<layer id="0" name="89" type="Parameter" version="opset1">
+						<data shape="" element_type="i32" />
+						<rt_info>
+							<attribute name="fused_names" version="0" value="89" />
+						</rt_info>
+						<output>
+							<port id="0" precision="I32" />
+						</output>
+					</layer>
+					<layer id="5" name="dien/rnn_2/gru2/while/add_2/y" type="Const" version="opset1">
+						<data element_type="i32" shape="" offset="65715864" size="4" />
+						<rt_info>
+							<attribute name="fused_names" version="0" value="dien/rnn_2/gru2/while/add_2/y" />
+						</rt_info>
+						<output>
+							<port id="0" precision="I32" names="dien/rnn_2/gru2/while/add_2/y:0" />
+						</output>
+					</layer>
+					<layer id="6" name="dien/rnn_2/gru2/while/add_2" type="Add" version="opset1">
+						<data auto_broadcast="numpy" />
+						<rt_info>
+							<attribute name="fused_names" version="0" value="dien/rnn_2/gru2/while/add_2" />
+						</rt_info>
+						<input>
+							<port id="0" precision="I32" />
+							<port id="1" precision="I32" />
+						</input>
+						<output>
+							<port id="2" precision="I32" names="dien/rnn_2/gru2/while/add_2:0" />
+						</output>
+					</layer>
+					<layer id="8" name="89/EltwiseUnsqueeze_input_port_1/value447935" type="Const" version="opset1">
+						<data element_type="i64" shape="1" offset="39100320" size="8" />
+						<rt_info>
+							<attribute name="fused_names" version="0" value="89/EltwiseUnsqueeze_input_port_1/value447935" />
+						</rt_info>
+						<output>
+							<port id="0" precision="I64">
+								<dim>1</dim>
+							</port>
+						</output>
+					</layer>
+					<layer id="9" name="89/EltwiseUnsqueeze" type="Unsqueeze" version="opset1">
+						<rt_info>
+							<attribute name="fused_names" version="0" value="89/EltwiseUnsqueeze" />
+						</rt_info>
+						<input>
+							<port id="0" precision="I32" />
+							<port id="1" precision="I64">
+								<dim>1</dim>
+							</port>
+						</input>
+						<output>
+							<port id="2" precision="I32">
+								<dim>1</dim>
+							</port>
+						</output>
+					</layer>
+					<layer id="10" name="dien/rnn_2/gru2/while/GreaterEqual_1" type="GreaterEqual" version="opset1">
+						<data auto_broadcast="numpy" />
+						<rt_info>
+							<attribute name="fused_names" version="0" value="dien/rnn_2/gru2/while/GreaterEqual_1" />
+						</rt_info>
+						<input>
+							<port id="0" precision="I32">
+								<dim>1</dim>
+							</port>
+							<port id="1" precision="I32">
+								<dim>-1</dim>
+							</port>
+						</input>
+						<output>
+							<port id="2" precision="BOOL" names="dien/rnn_2/gru2/while/GreaterEqual_1:0">
+								<dim>-1</dim>
+							</port>
+						</output>
+					</layer>
+					<layer id="11" name="dien/rnn_2/gru2/while/Select_1/Broadcast//value566941" type="Const" version="opset1">
+						<data element_type="i64" shape="1" offset="65710376" size="8" />
+						<rt_info>
+							<attribute name="fused_names" version="0" value="dien/rnn_2/gru2/while/Select_1/Broadcast//value566941" />
+						</rt_info>
+						<output>
+							<port id="0" precision="I64">
+								<dim>1</dim>
+							</port>
+						</output>
+					</layer>
+					<layer id="12" name="dien/rnn_2/gru2/while/Select_1/Broadcast/" type="Unsqueeze" version="opset1">
+						<rt_info>
+							<attribute name="fused_names" version="0" value="dien/rnn_2/gru2/while/Select_1/Broadcast/" />
+						</rt_info>
+						<input>
+							<port id="0" precision="BOOL">
+								<dim>-1</dim>
+							</port>
+							<port id="1" precision="I64">
+								<dim>1</dim>
+							</port>
+						</input>
+						<output>
+							<port id="2" precision="BOOL">
+								<dim>-1</dim>
+								<dim>1</dim>
+							</port>
+						</output>
+					</layer>
+					<layer id="13" name="dien/rnn_2/gru2/while/sub/x" type="Const" version="opset1">
+						<data element_type="f32" shape="1, 1" offset="65710384" size="4" />
+						<rt_info>
+							<attribute name="fused_names" version="0" value="dien/rnn_2/gru2/while/sub/x" />
+						</rt_info>
+						<output>
+							<port id="0" precision="FP32" names="dien/rnn_2/gru2/while/sub/x:0">
+								<dim>1</dim>
+								<dim>1</dim>
+							</port>
+						</output>
+					</layer>
+					<layer id="14" name="69929" type="Const" version="opset1">
+						<data element_type="i64" shape="1" offset="65710376" size="8" />
+						<rt_info>
+							<attribute name="fused_names" version="0" value="69929" />
+						</rt_info>
+						<output>
+							<port id="0" precision="I64">
+								<dim>1</dim>
+							</port>
+						</output>
+					</layer>
+					<layer id="15" name="dien/rnn_2/gru2/while/strided_slice/Output_0/Data_/InputSqueeze" type="Squeeze" version="opset1">
+						<rt_info>
+							<attribute name="fused_names" version="0" value="dien/rnn_2/gru2/while/strided_slice/Output_0/Data_/InputSqueeze" />
+						</rt_info>
+						<input>
+							<port id="0" precision="FP32">
+								<dim>-1</dim>
+								<dim>1</dim>
+								<dim>1</dim>
+							</port>
+							<port id="1" precision="I64">
+								<dim>1</dim>
+							</port>
+						</input>
+						<output>
+							<port id="2" precision="FP32">
+								<dim>-1</dim>
+								<dim>1</dim>
+							</port>
+						</output>
+					</layer>
+					<layer id="16" name="dien/rnn_2/gru2/while/sub" type="Subtract" version="opset1">
+						<data auto_broadcast="numpy" />
+						<rt_info>
+							<attribute name="fused_names" version="0" value="dien/rnn_2/gru2/while/sub, dien/rnn_2/gru2/while/sub/neg_" />
+						</rt_info>
+						<input>
+							<port id="0" precision="FP32">
+								<dim>1</dim>
+								<dim>1</dim>
+							</port>
+							<port id="1" precision="FP32">
+								<dim>-1</dim>
+								<dim>1</dim>
+							</port>
+						</input>
+						<output>
+							<port id="2" precision="FP32" names="dien/rnn_2/gru2/while/sub:0">
+								<dim>-1</dim>
+								<dim>1</dim>
+							</port>
+						</output>
+					</layer>
+					<layer id="17" name="73962" type="Const" version="opset1">
+						<data element_type="i64" shape="1" offset="39100320" size="8" />
+						<rt_info>
+							<attribute name="fused_names" version="0" value="73962" />
+						</rt_info>
+						<output>
+							<port id="0" precision="I64">
+								<dim>1</dim>
+							</port>
+						</output>
+					</layer>
+					<layer id="18" name="dien/rnn_2/gru2/while/TensorArrayReadV3/Output_0/Data_/InputSqueeze" type="Squeeze" version="opset1">
+						<rt_info>
+							<attribute name="fused_names" version="0" value="dien/rnn_2/gru2/while/TensorArrayReadV3/Output_0/Data_/InputSqueeze" />
+						</rt_info>
+						<input>
+							<port id="0" precision="FP32">
+								<dim>1</dim>
+								<dim>-1</dim>
+								<dim>36</dim>
+							</port>
+							<port id="1" precision="I64">
+								<dim>1</dim>
+							</port>
+						</input>
+						<output>
+							<port id="2" precision="FP32" names="dien/rnn_2/gru2/while/TensorArrayReadV3:0">
+								<dim>-1</dim>
+								<dim>36</dim>
+							</port>
+						</output>
+					</layer>
+					<layer id="19" name="dien/rnn_2/gru2/while/concat" type="Concat" version="opset1">
+						<data axis="1" />
+						<rt_info>
+							<attribute name="fused_names" version="0" value="dien/rnn_2/gru2/while/concat" />
+						</rt_info>
+						<input>
+							<port id="0" precision="FP32">
+								<dim>-1</dim>
+								<dim>36</dim>
+							</port>
+							<port id="1" precision="FP32">
+								<dim>-1</dim>
+								<dim>36</dim>
+							</port>
+						</input>
+						<output>
+							<port id="2" precision="FP32" names="dien/rnn_2/gru2/while/concat:0">
+								<dim>-1</dim>
+								<dim>72</dim>
+							</port>
+						</output>
+					</layer>
+					<layer id="20" name="dien/rnn_2/gru2/while/MatMul/Enter" type="Const" version="opset1">
+						<data element_type="f32" shape="72, 72" offset="65807044" size="20736" />
+						<rt_info>
+							<attribute name="fused_names" version="0" value="dien/rnn_2/gru2/while/MatMul/Enter" />
+						</rt_info>
+						<output>
+							<port id="0" precision="FP32" names="dien/rnn_2/gru2/while/MatMul/Enter:0">
+								<dim>72</dim>
+								<dim>72</dim>
+							</port>
+						</output>
+					</layer>
+					<layer id="21" name="dien/rnn_2/gru2/while/MatMul" type="MatMul" version="opset1">
+						<data transpose_a="false" transpose_b="true" />
+						<rt_info>
+							<attribute name="fused_names" version="0" value="dien/rnn_2/gru2/while/MatMul" />
+						</rt_info>
+						<input>
+							<port id="0" precision="FP32">
+								<dim>-1</dim>
+								<dim>72</dim>
+							</port>
+							<port id="1" precision="FP32">
+								<dim>72</dim>
+								<dim>72</dim>
+							</port>
+						</input>
+						<output>
+							<port id="2" precision="FP32" names="dien/rnn_2/gru2/while/MatMul:0">
+								<dim>-1</dim>
+								<dim>72</dim>
+							</port>
+						</output>
+					</layer>
+					<layer id="22" name="dien/rnn_2/gru2/while/BiasAdd/Enter" type="Const" version="opset1">
+						<data element_type="f32" shape="1, 72" offset="65827780" size="288" />
+						<rt_info>
+							<attribute name="fused_names" version="0" value="dien/rnn_2/gru2/while/BiasAdd/Enter" />
+						</rt_info>
+						<output>
+							<port id="0" precision="FP32" names="dien/rnn_2/gru2/while/BiasAdd/Enter:0">
+								<dim>1</dim>
+								<dim>72</dim>
+							</port>
+						</output>
+					</layer>
+					<layer id="23" name="dien/rnn_2/gru2/while/BiasAdd/Add" type="Add" version="opset1">
+						<data auto_broadcast="numpy" />
+						<rt_info>
+							<attribute name="fused_names" version="0" value="dien/rnn_2/gru2/while/BiasAdd/Add" />
+						</rt_info>
+						<input>
+							<port id="0" precision="FP32">
+								<dim>-1</dim>
+								<dim>72</dim>
+							</port>
+							<port id="1" precision="FP32">
+								<dim>1</dim>
+								<dim>72</dim>
+							</port>
+						</input>
+						<output>
+							<port id="2" precision="FP32" names="dien/rnn_2/gru2/while/BiasAdd:0">
+								<dim>-1</dim>
+								<dim>72</dim>
+							</port>
+						</output>
+					</layer>
+					<layer id="24" name="dien/rnn_2/gru2/while/Sigmoid" type="Sigmoid" version="opset1">
+						<rt_info>
+							<attribute name="fused_names" version="0" value="dien/rnn_2/gru2/while/Sigmoid" />
+						</rt_info>
+						<input>
+							<port id="0" precision="FP32">
+								<dim>-1</dim>
+								<dim>72</dim>
+							</port>
+						</input>
+						<output>
+							<port id="1" precision="FP32" names="dien/rnn_2/gru2/while/Sigmoid:0">
+								<dim>-1</dim>
+								<dim>72</dim>
+							</port>
+						</output>
+					</layer>
+					<layer id="25" name="dien/rnn_2/gru2/while/split/split_dim" type="Const" version="opset1">
+						<data element_type="i32" shape="" offset="65715864" size="4" />
+						<rt_info>
+							<attribute name="fused_names" version="0" value="dien/rnn_2/gru2/while/split/split_dim" />
+						</rt_info>
+						<output>
+							<port id="0" precision="I32" />
+						</output>
+					</layer>
+					<layer id="26" name="dien/rnn_2/gru2/while/split" type="Split" version="opset1">
+						<data num_splits="2" />
+						<rt_info>
+							<attribute name="fused_names" version="0" value="dien/rnn_2/gru2/while/split" />
+						</rt_info>
+						<input>
+							<port id="0" precision="FP32">
+								<dim>-1</dim>
+								<dim>72</dim>
+							</port>
+							<port id="1" precision="I32" />
+						</input>
+						<output>
+							<port id="2" precision="FP32" names="dien/rnn_2/gru2/while/split:0">
+								<dim>-1</dim>
+								<dim>36</dim>
+							</port>
+							<port id="3" precision="FP32" names="dien/rnn_2/gru2/while/split:1">
+								<dim>-1</dim>
+								<dim>36</dim>
+							</port>
+						</output>
+					</layer>
+					<layer id="27" name="dien/rnn_2/gru2/while/mul_1" type="Multiply" version="opset1">
+						<data auto_broadcast="numpy" />
+						<rt_info>
+							<attribute name="fused_names" version="0" value="dien/rnn_2/gru2/while/mul_1" />
+						</rt_info>
+						<input>
+							<port id="0" precision="FP32">
+								<dim>-1</dim>
+								<dim>1</dim>
+							</port>
+							<port id="1" precision="FP32">
+								<dim>-1</dim>
+								<dim>36</dim>
+							</port>
+						</input>
+						<output>
+							<port id="2" precision="FP32">
+								<dim>-1</dim>
+								<dim>36</dim>
+							</port>
+						</output>
+					</layer>
+					<layer id="28" name="dien/rnn_2/gru2/while/mul_2" type="Multiply" version="opset1">
+						<data auto_broadcast="numpy" />
+						<rt_info>
+							<attribute name="fused_names" version="0" value="dien/rnn_2/gru2/while/mul_2" />
+						</rt_info>
+						<input>
+							<port id="0" precision="FP32">
+								<dim>-1</dim>
+								<dim>36</dim>
+							</port>
+							<port id="1" precision="FP32">
+								<dim>-1</dim>
+								<dim>36</dim>
+							</port>
+						</input>
+						<output>
+							<port id="2" precision="FP32" names="dien/rnn_2/gru2/while/mul_2:0">
+								<dim>-1</dim>
+								<dim>36</dim>
+							</port>
+						</output>
+					</layer>
+					<layer id="29" name="dien/rnn_2/gru2/while/sub_1/x" type="Const" version="opset1">
+						<data element_type="f32" shape="1, 1" offset="65710384" size="4" />
+						<rt_info>
+							<attribute name="fused_names" version="0" value="dien/rnn_2/gru2/while/sub_1/x" />
+						</rt_info>
+						<output>
+							<port id="0" precision="FP32" names="dien/rnn_2/gru2/while/sub_1/x:0">
+								<dim>1</dim>
+								<dim>1</dim>
+							</port>
+						</output>
+					</layer>
+					<layer id="30" name="dien/rnn_2/gru2/while/sub_1" type="Subtract" version="opset1">
+						<data auto_broadcast="numpy" />
+						<rt_info>
+							<attribute name="fused_names" version="0" value="dien/rnn_2/gru2/while/sub_1, dien/rnn_2/gru2/while/sub_1/neg_" />
+						</rt_info>
+						<input>
+							<port id="0" precision="FP32">
+								<dim>1</dim>
+								<dim>1</dim>
+							</port>
+							<port id="1" precision="FP32">
+								<dim>-1</dim>
+								<dim>36</dim>
+							</port>
+						</input>
+						<output>
+							<port id="2" precision="FP32" names="dien/rnn_2/gru2/while/sub_1:0">
+								<dim>-1</dim>
+								<dim>36</dim>
+							</port>
+						</output>
+					</layer>
+					<layer id="31" name="dien/rnn_2/gru2/while/mul" type="Multiply" version="opset1">
+						<data auto_broadcast="numpy" />
+						<rt_info>
+							<attribute name="fused_names" version="0" value="dien/rnn_2/gru2/while/mul" />
+						</rt_info>
+						<input>
+							<port id="0" precision="FP32">
+								<dim>-1</dim>
+								<dim>36</dim>
+							</port>
+							<port id="1" precision="FP32">
+								<dim>-1</dim>
+								<dim>36</dim>
+							</port>
+						</input>
+						<output>
+							<port id="2" precision="FP32" names="dien/rnn_2/gru2/while/mul:0">
+								<dim>-1</dim>
+								<dim>36</dim>
+							</port>
+						</output>
+					</layer>
+					<layer id="32" name="dien/rnn_2/gru2/while/concat_1" type="Concat" version="opset1">
+						<data axis="1" />
+						<rt_info>
+							<attribute name="fused_names" version="0" value="dien/rnn_2/gru2/while/concat_1" />
+						</rt_info>
+						<input>
+							<port id="0" precision="FP32">
+								<dim>-1</dim>
+								<dim>36</dim>
+							</port>
+							<port id="1" precision="FP32">
+								<dim>-1</dim>
+								<dim>36</dim>
+							</port>
+						</input>
+						<output>
+							<port id="2" precision="FP32" names="dien/rnn_2/gru2/while/concat_1:0">
+								<dim>-1</dim>
+								<dim>72</dim>
+							</port>
+						</output>
+					</layer>
+					<layer id="33" name="dien/rnn_2/gru2/while/MatMul_1/Enter" type="Const" version="opset1">
+						<data element_type="f32" shape="36, 72" offset="65828068" size="10368" />
+						<rt_info>
+							<attribute name="fused_names" version="0" value="dien/rnn_2/gru2/while/MatMul_1/Enter" />
+						</rt_info>
+						<output>
+							<port id="0" precision="FP32" names="dien/rnn_2/gru2/while/MatMul_1/Enter:0">
+								<dim>36</dim>
+								<dim>72</dim>
+							</port>
+						</output>
+					</layer>
+					<layer id="34" name="dien/rnn_2/gru2/while/MatMul_1" type="MatMul" version="opset1">
+						<data transpose_a="false" transpose_b="true" />
+						<rt_info>
+							<attribute name="fused_names" version="0" value="dien/rnn_2/gru2/while/MatMul_1" />
+						</rt_info>
+						<input>
+							<port id="0" precision="FP32">
+								<dim>-1</dim>
+								<dim>72</dim>
+							</port>
+							<port id="1" precision="FP32">
+								<dim>36</dim>
+								<dim>72</dim>
+							</port>
+						</input>
+						<output>
+							<port id="2" precision="FP32" names="dien/rnn_2/gru2/while/MatMul_1:0">
+								<dim>-1</dim>
+								<dim>36</dim>
+							</port>
+						</output>
+					</layer>
+					<layer id="35" name="dien/rnn_2/gru2/while/BiasAdd_1/Enter" type="Const" version="opset1">
+						<data element_type="f32" shape="1, 36" offset="65838436" size="144" />
+						<rt_info>
+							<attribute name="fused_names" version="0" value="dien/rnn_2/gru2/while/BiasAdd_1/Enter" />
+						</rt_info>
+						<output>
+							<port id="0" precision="FP32" names="dien/rnn_2/gru2/while/BiasAdd_1/Enter:0">
+								<dim>1</dim>
+								<dim>36</dim>
+							</port>
+						</output>
+					</layer>
+					<layer id="36" name="dien/rnn_2/gru2/while/BiasAdd_1/Add" type="Add" version="opset1">
+						<data auto_broadcast="numpy" />
+						<rt_info>
+							<attribute name="fused_names" version="0" value="dien/rnn_2/gru2/while/BiasAdd_1/Add" />
+						</rt_info>
+						<input>
+							<port id="0" precision="FP32">
+								<dim>-1</dim>
+								<dim>36</dim>
+							</port>
+							<port id="1" precision="FP32">
+								<dim>1</dim>
+								<dim>36</dim>
+							</port>
+						</input>
+						<output>
+							<port id="2" precision="FP32" names="dien/rnn_2/gru2/while/BiasAdd_1:0">
+								<dim>-1</dim>
+								<dim>36</dim>
+							</port>
+						</output>
+					</layer>
+					<layer id="37" name="dien/rnn_2/gru2/while/Tanh" type="Tanh" version="opset1">
+						<rt_info>
+							<attribute name="fused_names" version="0" value="dien/rnn_2/gru2/while/Tanh" />
+						</rt_info>
+						<input>
+							<port id="0" precision="FP32">
+								<dim>-1</dim>
+								<dim>36</dim>
+							</port>
+						</input>
+						<output>
+							<port id="1" precision="FP32" names="dien/rnn_2/gru2/while/Tanh:0">
+								<dim>-1</dim>
+								<dim>36</dim>
+							</port>
+						</output>
+					</layer>
+					<layer id="38" name="dien/rnn_2/gru2/while/mul_3" type="Multiply" version="opset1">
+						<data auto_broadcast="numpy" />
+						<rt_info>
+							<attribute name="fused_names" version="0" value="dien/rnn_2/gru2/while/mul_3" />
+						</rt_info>
+						<input>
+							<port id="0" precision="FP32">
+								<dim>-1</dim>
+								<dim>36</dim>
+							</port>
+							<port id="1" precision="FP32">
+								<dim>-1</dim>
+								<dim>36</dim>
+							</port>
+						</input>
+						<output>
+							<port id="2" precision="FP32" names="dien/rnn_2/gru2/while/mul_3:0">
+								<dim>-1</dim>
+								<dim>36</dim>
+							</port>
+						</output>
+					</layer>
+					<layer id="39" name="dien/rnn_2/gru2/while/add_1" type="Add" version="opset1">
+						<data auto_broadcast="numpy" />
+						<rt_info>
+							<attribute name="fused_names" version="0" value="dien/rnn_2/gru2/while/add_1" />
+						</rt_info>
+						<input>
+							<port id="0" precision="FP32">
+								<dim>-1</dim>
+								<dim>36</dim>
+							</port>
+							<port id="1" precision="FP32">
+								<dim>-1</dim>
+								<dim>36</dim>
+							</port>
+						</input>
+						<output>
+							<port id="2" precision="FP32" names="dien/rnn_2/gru2/while/add_1:0">
+								<dim>-1</dim>
+								<dim>36</dim>
+							</port>
+						</output>
+					</layer>
+					<layer id="40" name="dien/rnn_2/gru2/while/Select_1" type="Select" version="opset1">
+						<data auto_broadcast="numpy" />
+						<rt_info>
+							<attribute name="fused_names" version="0" value="dien/rnn_2/gru2/while/Select_1" />
+						</rt_info>
+						<input>
+							<port id="0" precision="BOOL">
+								<dim>-1</dim>
+								<dim>1</dim>
+							</port>
+							<port id="1" precision="FP32">
+								<dim>-1</dim>
+								<dim>36</dim>
+							</port>
+							<port id="2" precision="FP32">
+								<dim>-1</dim>
+								<dim>36</dim>
+							</port>
+						</input>
+						<output>
+							<port id="3" precision="FP32" names="dien/rnn_2/gru2/while/Select_1:0">
+								<dim>-1</dim>
+								<dim>36</dim>
+							</port>
+						</output>
+					</layer>
+					<layer id="41" name="dien/rnn_2/gru2/while/Select_1/Output_0/Data_/sink_port_0" type="Result" version="opset1">
+						<rt_info>
+							<attribute name="fused_names" version="0" value="dien/rnn_2/gru2/while/Select_1/Output_0/Data_/sink_port_0" />
+						</rt_info>
+						<input>
+							<port id="0" precision="FP32">
+								<dim>-1</dim>
+								<dim>36</dim>
+							</port>
+						</input>
+					</layer>
+					<layer id="7" name="dien/rnn_2/gru2/while/add_2/Output_0/Data_/sink_port_0" type="Result" version="opset1">
+						<rt_info>
+							<attribute name="fused_names" version="0" value="dien/rnn_2/gru2/while/add_2/Output_0/Data_/sink_port_0" />
+						</rt_info>
+						<input>
+							<port id="0" precision="I32" />
+						</input>
+					</layer>
+				</layers>
+				<edges>
+					<edge from-layer="0" from-port="0" to-layer="9" to-port="0" />
+					<edge from-layer="0" from-port="0" to-layer="6" to-port="0" />
+					<edge from-layer="1" from-port="0" to-layer="10" to-port="1" />
+					<edge from-layer="2" from-port="0" to-layer="31" to-port="1" />
+					<edge from-layer="2" from-port="0" to-layer="28" to-port="1" />
+					<edge from-layer="2" from-port="0" to-layer="40" to-port="1" />
+					<edge from-layer="2" from-port="0" to-layer="19" to-port="1" />
+					<edge from-layer="3" from-port="0" to-layer="18" to-port="0" />
+					<edge from-layer="4" from-port="0" to-layer="15" to-port="0" />
+					<edge from-layer="5" from-port="0" to-layer="6" to-port="1" />
+					<edge from-layer="6" from-port="2" to-layer="7" to-port="0" />
+					<edge from-layer="8" from-port="0" to-layer="9" to-port="1" />
+					<edge from-layer="9" from-port="2" to-layer="10" to-port="0" />
+					<edge from-layer="10" from-port="2" to-layer="12" to-port="0" />
+					<edge from-layer="11" from-port="0" to-layer="12" to-port="1" />
+					<edge from-layer="12" from-port="2" to-layer="40" to-port="0" />
+					<edge from-layer="13" from-port="0" to-layer="16" to-port="0" />
+					<edge from-layer="14" from-port="0" to-layer="15" to-port="1" />
+					<edge from-layer="15" from-port="2" to-layer="16" to-port="1" />
+					<edge from-layer="16" from-port="2" to-layer="27" to-port="0" />
+					<edge from-layer="17" from-port="0" to-layer="18" to-port="1" />
+					<edge from-layer="18" from-port="2" to-layer="32" to-port="0" />
+					<edge from-layer="18" from-port="2" to-layer="19" to-port="0" />
+					<edge from-layer="19" from-port="2" to-layer="21" to-port="0" />
+					<edge from-layer="20" from-port="0" to-layer="21" to-port="1" />
+					<edge from-layer="21" from-port="2" to-layer="23" to-port="0" />
+					<edge from-layer="22" from-port="0" to-layer="23" to-port="1" />
+					<edge from-layer="23" from-port="2" to-layer="24" to-port="0" />
+					<edge from-layer="24" from-port="1" to-layer="26" to-port="0" />
+					<edge from-layer="25" from-port="0" to-layer="26" to-port="1" />
+					<edge from-layer="26" from-port="2" to-layer="31" to-port="0" />
+					<edge from-layer="26" from-port="3" to-layer="27" to-port="1" />
+					<edge from-layer="27" from-port="2" to-layer="30" to-port="1" />
+					<edge from-layer="27" from-port="2" to-layer="28" to-port="0" />
+					<edge from-layer="28" from-port="2" to-layer="39" to-port="0" />
+					<edge from-layer="29" from-port="0" to-layer="30" to-port="0" />
+					<edge from-layer="30" from-port="2" to-layer="38" to-port="0" />
+					<edge from-layer="31" from-port="2" to-layer="32" to-port="1" />
+					<edge from-layer="32" from-port="2" to-layer="34" to-port="0" />
+					<edge from-layer="33" from-port="0" to-layer="34" to-port="1" />
+					<edge from-layer="34" from-port="2" to-layer="36" to-port="0" />
+					<edge from-layer="35" from-port="0" to-layer="36" to-port="1" />
+					<edge from-layer="36" from-port="2" to-layer="37" to-port="0" />
+					<edge from-layer="37" from-port="1" to-layer="38" to-port="1" />
+					<edge from-layer="38" from-port="2" to-layer="39" to-port="1" />
+					<edge from-layer="39" from-port="2" to-layer="40" to-port="2" />
+					<edge from-layer="40" from-port="3" to-layer="41" to-port="0" />
+				</edges>
+				<rt_info />
+			</body>
+		</layer>
+		<layer id="191" name="dien/concat" type="Concat" version="opset1">
+			<data axis="1" />
+			<input>
+				<port id="0" precision="FP32">
+					<dim>-1</dim>
+					<dim>18</dim>
+				</port>
+				<port id="1" precision="FP32">
+					<dim>-1</dim>
+					<dim>36</dim>
+				</port>
+				<port id="2" precision="FP32">
+					<dim>-1</dim>
+					<dim>36</dim>
+				</port>
+				<port id="3" precision="FP32">
+					<dim>-1</dim>
+					<dim>36</dim>
+				</port>
+				<port id="4" precision="FP32">
+					<dim>-1</dim>
+					<dim>36</dim>
+				</port>
+			</input>
+			<output>
+				<port id="5" precision="FP32" names="dien/concat:0">
+					<dim>-1</dim>
+					<dim>162</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="192" name="dien/fcn/bn1/batchnorm/mul" type="Const" version="opset1">
+			<data element_type="f32" shape="1, 162" offset="65838580" size="648" />
+			<output>
+				<port id="0" precision="FP32" names="dien/fcn/bn1/batchnorm/mul:0">
+					<dim>1</dim>
+					<dim>162</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="193" name="dien/fcn/bn1/batchnorm/mul_1" type="Multiply" version="opset1">
+			<data auto_broadcast="numpy" />
+			<input>
+				<port id="0" precision="FP32">
+					<dim>-1</dim>
+					<dim>162</dim>
+				</port>
+				<port id="1" precision="FP32">
+					<dim>1</dim>
+					<dim>162</dim>
+				</port>
+			</input>
+			<output>
+				<port id="2" precision="FP32" names="dien/fcn/bn1/batchnorm/mul_1:0">
+					<dim>-1</dim>
+					<dim>162</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="194" name="dien/fcn/bn1/batchnorm/sub" type="Const" version="opset1">
+			<data element_type="f32" shape="1, 162" offset="65839228" size="648" />
+			<output>
+				<port id="0" precision="FP32" names="dien/fcn/bn1/batchnorm/sub:0">
+					<dim>1</dim>
+					<dim>162</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="195" name="dien/fcn/bn1/batchnorm/add_1" type="Add" version="opset1">
+			<data auto_broadcast="numpy" />
+			<input>
+				<port id="0" precision="FP32">
+					<dim>-1</dim>
+					<dim>162</dim>
+				</port>
+				<port id="1" precision="FP32">
+					<dim>1</dim>
+					<dim>162</dim>
+				</port>
+			</input>
+			<output>
+				<port id="2" precision="FP32" names="dien/fcn/bn1/batchnorm/add_1:0">
+					<dim>-1</dim>
+					<dim>162</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="196" name="dien/fcn/f1/kernel/read" type="Const" version="opset1">
+			<data element_type="f32" shape="200, 162" offset="65839876" size="129600" />
+			<output>
+				<port id="0" precision="FP32" names="dien/fcn/f1/kernel/read:0">
+					<dim>200</dim>
+					<dim>162</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="197" name="dien/fcn/f1/MatMul" type="MatMul" version="opset1">
+			<data transpose_a="false" transpose_b="true" />
+			<input>
+				<port id="0" precision="FP32">
+					<dim>-1</dim>
+					<dim>162</dim>
+				</port>
+				<port id="1" precision="FP32">
+					<dim>200</dim>
+					<dim>162</dim>
+				</port>
+			</input>
+			<output>
+				<port id="2" precision="FP32" names="dien/fcn/f1/MatMul:0">
+					<dim>-1</dim>
+					<dim>200</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="198" name="dien/fcn/f1/bias/read" type="Const" version="opset1">
+			<data element_type="f32" shape="1, 200" offset="65969476" size="800" />
+			<output>
+				<port id="0" precision="FP32" names="dien/fcn/f1/bias/read:0">
+					<dim>1</dim>
+					<dim>200</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="199" name="dien/fcn/f1/BiasAdd/Add" type="Add" version="opset1">
+			<data auto_broadcast="numpy" />
+			<input>
+				<port id="0" precision="FP32">
+					<dim>-1</dim>
+					<dim>200</dim>
+				</port>
+				<port id="1" precision="FP32">
+					<dim>1</dim>
+					<dim>200</dim>
+				</port>
+			</input>
+			<output>
+				<port id="2" precision="FP32" names="dien/fcn/f1/BiasAdd:0">
+					<dim>-1</dim>
+					<dim>200</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="200" name="dien/fcn/Mean/reduction_indices" type="Const" version="opset1">
+			<data element_type="i64" shape="1" offset="39100320" size="8" />
+			<output>
+				<port id="0" precision="I64" names="dien/fcn/Mean/reduction_indices:0">
+					<dim>1</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="201" name="dien/fcn/Reshape" type="ReduceMean" version="opset1">
+			<data keep_dims="true" />
+			<input>
+				<port id="0" precision="FP32">
+					<dim>-1</dim>
+					<dim>200</dim>
+				</port>
+				<port id="1" precision="I64">
+					<dim>1</dim>
+				</port>
+			</input>
+			<output>
+				<port id="2" precision="FP32" names="dien/fcn/Mean:0">
+					<dim>1</dim>
+					<dim>200</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="202" name="dien/fcn/sub_1" type="Subtract" version="opset1">
+			<data auto_broadcast="numpy" />
+			<input>
+				<port id="0" precision="FP32">
+					<dim>-1</dim>
+					<dim>200</dim>
+				</port>
+				<port id="1" precision="FP32">
+					<dim>1</dim>
+					<dim>200</dim>
+				</port>
+			</input>
+			<output>
+				<port id="2" precision="FP32" names="dien/fcn/sub_1:0">
+					<dim>-1</dim>
+					<dim>200</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="203" name="dien/fcn/sub" type="Subtract" version="opset1">
+			<data auto_broadcast="numpy" />
+			<input>
+				<port id="0" precision="FP32">
+					<dim>-1</dim>
+					<dim>200</dim>
+				</port>
+				<port id="1" precision="FP32">
+					<dim>1</dim>
+					<dim>200</dim>
+				</port>
+			</input>
+			<output>
+				<port id="2" precision="FP32" names="dien/fcn/sub:0">
+					<dim>-1</dim>
+					<dim>200</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="204" name="585" type="Const" version="opset1">
+			<data element_type="f32" shape="1, 1" offset="65970276" size="4" />
+			<output>
+				<port id="0" precision="FP32">
+					<dim>1</dim>
+					<dim>1</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="205" name="dien/fcn/Square/pow_" type="Power" version="opset1">
+			<data auto_broadcast="numpy" />
+			<input>
+				<port id="0" precision="FP32">
+					<dim>-1</dim>
+					<dim>200</dim>
+				</port>
+				<port id="1" precision="FP32">
+					<dim>1</dim>
+					<dim>1</dim>
+				</port>
+			</input>
+			<output>
+				<port id="2" precision="FP32" names="dien/fcn/Square:0">
+					<dim>-1</dim>
+					<dim>200</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="206" name="dien/fcn/add/y" type="Const" version="opset1">
+			<data element_type="f32" shape="1, 1" offset="65970280" size="4" />
+			<output>
+				<port id="0" precision="FP32" names="dien/fcn/add/y:0">
+					<dim>1</dim>
+					<dim>1</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="207" name="dien/fcn/add" type="Add" version="opset1">
+			<data auto_broadcast="numpy" />
+			<input>
+				<port id="0" precision="FP32">
+					<dim>-1</dim>
+					<dim>200</dim>
+				</port>
+				<port id="1" precision="FP32">
+					<dim>1</dim>
+					<dim>1</dim>
+				</port>
+			</input>
+			<output>
+				<port id="2" precision="FP32" names="dien/fcn/add:0">
+					<dim>-1</dim>
+					<dim>200</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="208" name="dien/fcn/Mean_1/reduction_indices" type="Const" version="opset1">
+			<data element_type="i64" shape="1" offset="39100320" size="8" />
+			<output>
+				<port id="0" precision="I64" names="dien/fcn/Mean_1/reduction_indices:0">
+					<dim>1</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="209" name="dien/fcn/Mean_1" type="ReduceMean" version="opset1">
+			<data keep_dims="false" />
+			<input>
+				<port id="0" precision="FP32">
+					<dim>-1</dim>
+					<dim>200</dim>
+				</port>
+				<port id="1" precision="I64">
+					<dim>1</dim>
+				</port>
+			</input>
+			<output>
+				<port id="2" precision="FP32" names="dien/fcn/Mean_1:0">
+					<dim>200</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="210" name="579" type="Const" version="opset1">
+			<data element_type="f32" shape="1" offset="65970284" size="4" />
+			<output>
+				<port id="0" precision="FP32">
+					<dim>1</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="211" name="dien/fcn/Sqrt/pow_" type="Power" version="opset1">
+			<data auto_broadcast="numpy" />
+			<input>
+				<port id="0" precision="FP32">
+					<dim>200</dim>
+				</port>
+				<port id="1" precision="FP32">
+					<dim>1</dim>
+				</port>
+			</input>
+			<output>
+				<port id="2" precision="FP32" names="dien/fcn/Sqrt:0">
+					<dim>200</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="212" name="dien/fcn/Reshape_1/shape" type="Const" version="opset1">
+			<data element_type="i64" shape="2" offset="65970288" size="16" />
+			<output>
+				<port id="0" precision="I64" names="dien/fcn/Reshape_1/shape:0">
+					<dim>2</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="213" name="dien/fcn/Reshape_1" type="Reshape" version="opset1">
+			<data special_zero="false" />
+			<input>
+				<port id="0" precision="FP32">
+					<dim>200</dim>
+				</port>
+				<port id="1" precision="I64">
+					<dim>2</dim>
+				</port>
+			</input>
+			<output>
+				<port id="2" precision="FP32" names="dien/fcn/Reshape_1:0">
+					<dim>1</dim>
+					<dim>200</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="214" name="dien/fcn/add_1/y" type="Const" version="opset1">
+			<data element_type="f32" shape="1, 1" offset="65970280" size="4" />
+			<output>
+				<port id="0" precision="FP32" names="dien/fcn/add_1/y:0">
+					<dim>1</dim>
+					<dim>1</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="215" name="dien/fcn/add_1" type="Add" version="opset1">
+			<data auto_broadcast="numpy" />
+			<input>
+				<port id="0" precision="FP32">
+					<dim>1</dim>
+					<dim>200</dim>
+				</port>
+				<port id="1" precision="FP32">
+					<dim>1</dim>
+					<dim>1</dim>
+				</port>
+			</input>
+			<output>
+				<port id="2" precision="FP32">
+					<dim>1</dim>
+					<dim>200</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="216" name="dien/fcn/truediv" type="Divide" version="opset1">
+			<data auto_broadcast="numpy" m_pythondiv="true" />
+			<input>
+				<port id="0" precision="FP32">
+					<dim>-1</dim>
+					<dim>200</dim>
+				</port>
+				<port id="1" precision="FP32">
+					<dim>1</dim>
+					<dim>200</dim>
+				</port>
+			</input>
+			<output>
+				<port id="2" precision="FP32" names="dien/fcn/truediv:0">
+					<dim>-1</dim>
+					<dim>200</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="217" name="dien/fcn/Sigmoid" type="Sigmoid" version="opset1">
+			<input>
+				<port id="0" precision="FP32">
+					<dim>-1</dim>
+					<dim>200</dim>
+				</port>
+			</input>
+			<output>
+				<port id="1" precision="FP32">
+					<dim>-1</dim>
+					<dim>200</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="218" name="data_mul_4947" type="Const" version="opset1">
+			<data element_type="f32" shape="1, 200" offset="65970304" size="800" />
+			<output>
+				<port id="0" precision="FP32">
+					<dim>1</dim>
+					<dim>200</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="219" name="dien/fcn/sub_2/neg_/Fused_Mul_" type="Multiply" version="opset1">
+			<data auto_broadcast="numpy" />
+			<input>
+				<port id="0" precision="FP32">
+					<dim>-1</dim>
+					<dim>200</dim>
+				</port>
+				<port id="1" precision="FP32">
+					<dim>1</dim>
+					<dim>200</dim>
+				</port>
+			</input>
+			<output>
+				<port id="2" precision="FP32">
+					<dim>-1</dim>
+					<dim>200</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="220" name="data_add_4949" type="Const" version="opset1">
+			<data element_type="f32" shape="1, 200" offset="65971104" size="800" />
+			<output>
+				<port id="0" precision="FP32">
+					<dim>1</dim>
+					<dim>200</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="221" name="dien/fcn/sub_2/Fused_Add_" type="Add" version="opset1">
+			<data auto_broadcast="numpy" />
+			<input>
+				<port id="0" precision="FP32">
+					<dim>-1</dim>
+					<dim>200</dim>
+				</port>
+				<port id="1" precision="FP32">
+					<dim>1</dim>
+					<dim>200</dim>
+				</port>
+			</input>
+			<output>
+				<port id="2" precision="FP32" names="dien/fcn/mul:0">
+					<dim>-1</dim>
+					<dim>200</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="222" name="dien/fcn/mul_1" type="Multiply" version="opset1">
+			<data auto_broadcast="numpy" />
+			<input>
+				<port id="0" precision="FP32">
+					<dim>-1</dim>
+					<dim>200</dim>
+				</port>
+				<port id="1" precision="FP32">
+					<dim>-1</dim>
+					<dim>200</dim>
+				</port>
+			</input>
+			<output>
+				<port id="2" precision="FP32" names="dien/fcn/mul_1:0">
+					<dim>-1</dim>
+					<dim>200</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="223" name="dien/fcn/mul_2" type="Multiply" version="opset1">
+			<data auto_broadcast="numpy" />
+			<input>
+				<port id="0" precision="FP32">
+					<dim>-1</dim>
+					<dim>200</dim>
+				</port>
+				<port id="1" precision="FP32">
+					<dim>-1</dim>
+					<dim>200</dim>
+				</port>
+			</input>
+			<output>
+				<port id="2" precision="FP32" names="dien/fcn/mul_2:0">
+					<dim>-1</dim>
+					<dim>200</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="224" name="dien/fcn/add_2" type="Add" version="opset1">
+			<data auto_broadcast="numpy" />
+			<input>
+				<port id="0" precision="FP32">
+					<dim>-1</dim>
+					<dim>200</dim>
+				</port>
+				<port id="1" precision="FP32">
+					<dim>-1</dim>
+					<dim>200</dim>
+				</port>
+			</input>
+			<output>
+				<port id="2" precision="FP32" names="dien/fcn/add_2:0">
+					<dim>-1</dim>
+					<dim>200</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="225" name="dien/fcn/f2/kernel/read" type="Const" version="opset1">
+			<data element_type="f32" shape="80, 200" offset="65971904" size="64000" />
+			<output>
+				<port id="0" precision="FP32" names="dien/fcn/f2/kernel/read:0">
+					<dim>80</dim>
+					<dim>200</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="226" name="dien/fcn/f2/MatMul" type="MatMul" version="opset1">
+			<data transpose_a="false" transpose_b="true" />
+			<input>
+				<port id="0" precision="FP32">
+					<dim>-1</dim>
+					<dim>200</dim>
+				</port>
+				<port id="1" precision="FP32">
+					<dim>80</dim>
+					<dim>200</dim>
+				</port>
+			</input>
+			<output>
+				<port id="2" precision="FP32" names="dien/fcn/f2/MatMul:0">
+					<dim>-1</dim>
+					<dim>80</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="227" name="dien/fcn/f2/bias/read" type="Const" version="opset1">
+			<data element_type="f32" shape="1, 80" offset="66035904" size="320" />
+			<output>
+				<port id="0" precision="FP32" names="dien/fcn/f2/bias/read:0">
+					<dim>1</dim>
+					<dim>80</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="228" name="dien/fcn/f2/BiasAdd/Add" type="Add" version="opset1">
+			<data auto_broadcast="numpy" />
+			<input>
+				<port id="0" precision="FP32">
+					<dim>-1</dim>
+					<dim>80</dim>
+				</port>
+				<port id="1" precision="FP32">
+					<dim>1</dim>
+					<dim>80</dim>
+				</port>
+			</input>
+			<output>
+				<port id="2" precision="FP32" names="dien/fcn/f2/BiasAdd:0">
+					<dim>-1</dim>
+					<dim>80</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="229" name="dien/fcn/Mean_2/reduction_indices" type="Const" version="opset1">
+			<data element_type="i64" shape="1" offset="39100320" size="8" />
+			<output>
+				<port id="0" precision="I64" names="dien/fcn/Mean_2/reduction_indices:0">
+					<dim>1</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="230" name="dien/fcn/Reshape_2" type="ReduceMean" version="opset1">
+			<data keep_dims="true" />
+			<input>
+				<port id="0" precision="FP32">
+					<dim>-1</dim>
+					<dim>80</dim>
+				</port>
+				<port id="1" precision="I64">
+					<dim>1</dim>
+				</port>
+			</input>
+			<output>
+				<port id="2" precision="FP32" names="dien/fcn/Mean_2:0">
+					<dim>1</dim>
+					<dim>80</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="231" name="dien/fcn/sub_4" type="Subtract" version="opset1">
+			<data auto_broadcast="numpy" />
+			<input>
+				<port id="0" precision="FP32">
+					<dim>-1</dim>
+					<dim>80</dim>
+				</port>
+				<port id="1" precision="FP32">
+					<dim>1</dim>
+					<dim>80</dim>
+				</port>
+			</input>
+			<output>
+				<port id="2" precision="FP32" names="dien/fcn/sub_4:0">
+					<dim>-1</dim>
+					<dim>80</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="232" name="dien/fcn/sub_3" type="Subtract" version="opset1">
+			<data auto_broadcast="numpy" />
+			<input>
+				<port id="0" precision="FP32">
+					<dim>-1</dim>
+					<dim>80</dim>
+				</port>
+				<port id="1" precision="FP32">
+					<dim>1</dim>
+					<dim>80</dim>
+				</port>
+			</input>
+			<output>
+				<port id="2" precision="FP32" names="dien/fcn/sub_3:0">
+					<dim>-1</dim>
+					<dim>80</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="233" name="581" type="Const" version="opset1">
+			<data element_type="f32" shape="1, 1" offset="65970276" size="4" />
+			<output>
+				<port id="0" precision="FP32">
+					<dim>1</dim>
+					<dim>1</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="234" name="dien/fcn/Square_1/pow_" type="Power" version="opset1">
+			<data auto_broadcast="numpy" />
+			<input>
+				<port id="0" precision="FP32">
+					<dim>-1</dim>
+					<dim>80</dim>
+				</port>
+				<port id="1" precision="FP32">
+					<dim>1</dim>
+					<dim>1</dim>
+				</port>
+			</input>
+			<output>
+				<port id="2" precision="FP32" names="dien/fcn/Square_1:0">
+					<dim>-1</dim>
+					<dim>80</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="235" name="dien/fcn/add_3/y" type="Const" version="opset1">
+			<data element_type="f32" shape="1, 1" offset="65970280" size="4" />
+			<output>
+				<port id="0" precision="FP32" names="dien/fcn/add_3/y:0">
+					<dim>1</dim>
+					<dim>1</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="236" name="dien/fcn/add_3" type="Add" version="opset1">
+			<data auto_broadcast="numpy" />
+			<input>
+				<port id="0" precision="FP32">
+					<dim>-1</dim>
+					<dim>80</dim>
+				</port>
+				<port id="1" precision="FP32">
+					<dim>1</dim>
+					<dim>1</dim>
+				</port>
+			</input>
+			<output>
+				<port id="2" precision="FP32" names="dien/fcn/add_3:0">
+					<dim>-1</dim>
+					<dim>80</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="237" name="dien/fcn/Mean_3/reduction_indices" type="Const" version="opset1">
+			<data element_type="i64" shape="1" offset="39100320" size="8" />
+			<output>
+				<port id="0" precision="I64" names="dien/fcn/Mean_3/reduction_indices:0">
+					<dim>1</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="238" name="dien/fcn/Mean_3" type="ReduceMean" version="opset1">
+			<data keep_dims="false" />
+			<input>
+				<port id="0" precision="FP32">
+					<dim>-1</dim>
+					<dim>80</dim>
+				</port>
+				<port id="1" precision="I64">
+					<dim>1</dim>
+				</port>
+			</input>
+			<output>
+				<port id="2" precision="FP32" names="dien/fcn/Mean_3:0">
+					<dim>80</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="239" name="587" type="Const" version="opset1">
+			<data element_type="f32" shape="1" offset="65970284" size="4" />
+			<output>
+				<port id="0" precision="FP32">
+					<dim>1</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="240" name="dien/fcn/Sqrt_1/pow_" type="Power" version="opset1">
+			<data auto_broadcast="numpy" />
+			<input>
+				<port id="0" precision="FP32">
+					<dim>80</dim>
+				</port>
+				<port id="1" precision="FP32">
+					<dim>1</dim>
+				</port>
+			</input>
+			<output>
+				<port id="2" precision="FP32" names="dien/fcn/Sqrt_1:0">
+					<dim>80</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="241" name="dien/fcn/Reshape_3/shape" type="Const" version="opset1">
+			<data element_type="i64" shape="2" offset="66036224" size="16" />
+			<output>
+				<port id="0" precision="I64" names="dien/fcn/Reshape_3/shape:0">
+					<dim>2</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="242" name="dien/fcn/Reshape_3" type="Reshape" version="opset1">
+			<data special_zero="false" />
+			<input>
+				<port id="0" precision="FP32">
+					<dim>80</dim>
+				</port>
+				<port id="1" precision="I64">
+					<dim>2</dim>
+				</port>
+			</input>
+			<output>
+				<port id="2" precision="FP32" names="dien/fcn/Reshape_3:0">
+					<dim>1</dim>
+					<dim>80</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="243" name="dien/fcn/add_4/y" type="Const" version="opset1">
+			<data element_type="f32" shape="1, 1" offset="65970280" size="4" />
+			<output>
+				<port id="0" precision="FP32" names="dien/fcn/add_4/y:0">
+					<dim>1</dim>
+					<dim>1</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="244" name="dien/fcn/add_4" type="Add" version="opset1">
+			<data auto_broadcast="numpy" />
+			<input>
+				<port id="0" precision="FP32">
+					<dim>1</dim>
+					<dim>80</dim>
+				</port>
+				<port id="1" precision="FP32">
+					<dim>1</dim>
+					<dim>1</dim>
+				</port>
+			</input>
+			<output>
+				<port id="2" precision="FP32">
+					<dim>1</dim>
+					<dim>80</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="245" name="dien/fcn/truediv_1" type="Divide" version="opset1">
+			<data auto_broadcast="numpy" m_pythondiv="true" />
+			<input>
+				<port id="0" precision="FP32">
+					<dim>-1</dim>
+					<dim>80</dim>
+				</port>
+				<port id="1" precision="FP32">
+					<dim>1</dim>
+					<dim>80</dim>
+				</port>
+			</input>
+			<output>
+				<port id="2" precision="FP32" names="dien/fcn/truediv_1:0">
+					<dim>-1</dim>
+					<dim>80</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="246" name="dien/fcn/Sigmoid_1" type="Sigmoid" version="opset1">
+			<input>
+				<port id="0" precision="FP32">
+					<dim>-1</dim>
+					<dim>80</dim>
+				</port>
+			</input>
+			<output>
+				<port id="1" precision="FP32">
+					<dim>-1</dim>
+					<dim>80</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="247" name="data_mul_49514955" type="Const" version="opset1">
+			<data element_type="f32" shape="1, 80" offset="66036240" size="320" />
+			<output>
+				<port id="0" precision="FP32">
+					<dim>1</dim>
+					<dim>80</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="248" name="dien/fcn/sub_5/neg_/Fused_Mul_" type="Multiply" version="opset1">
+			<data auto_broadcast="numpy" />
+			<input>
+				<port id="0" precision="FP32">
+					<dim>-1</dim>
+					<dim>80</dim>
+				</port>
+				<port id="1" precision="FP32">
+					<dim>1</dim>
+					<dim>80</dim>
+				</port>
+			</input>
+			<output>
+				<port id="2" precision="FP32">
+					<dim>-1</dim>
+					<dim>80</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="249" name="data_add_49524957" type="Const" version="opset1">
+			<data element_type="f32" shape="1, 80" offset="66036560" size="320" />
+			<output>
+				<port id="0" precision="FP32">
+					<dim>1</dim>
+					<dim>80</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="250" name="dien/fcn/sub_5/Fused_Add_" type="Add" version="opset1">
+			<data auto_broadcast="numpy" />
+			<input>
+				<port id="0" precision="FP32">
+					<dim>-1</dim>
+					<dim>80</dim>
+				</port>
+				<port id="1" precision="FP32">
+					<dim>1</dim>
+					<dim>80</dim>
+				</port>
+			</input>
+			<output>
+				<port id="2" precision="FP32" names="dien/fcn/mul_3:0">
+					<dim>-1</dim>
+					<dim>80</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="251" name="dien/fcn/mul_4" type="Multiply" version="opset1">
+			<data auto_broadcast="numpy" />
+			<input>
+				<port id="0" precision="FP32">
+					<dim>-1</dim>
+					<dim>80</dim>
+				</port>
+				<port id="1" precision="FP32">
+					<dim>-1</dim>
+					<dim>80</dim>
+				</port>
+			</input>
+			<output>
+				<port id="2" precision="FP32" names="dien/fcn/mul_4:0">
+					<dim>-1</dim>
+					<dim>80</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="252" name="dien/fcn/mul_5" type="Multiply" version="opset1">
+			<data auto_broadcast="numpy" />
+			<input>
+				<port id="0" precision="FP32">
+					<dim>-1</dim>
+					<dim>80</dim>
+				</port>
+				<port id="1" precision="FP32">
+					<dim>-1</dim>
+					<dim>80</dim>
+				</port>
+			</input>
+			<output>
+				<port id="2" precision="FP32" names="dien/fcn/mul_5:0">
+					<dim>-1</dim>
+					<dim>80</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="253" name="dien/fcn/add_5" type="Add" version="opset1">
+			<data auto_broadcast="numpy" />
+			<input>
+				<port id="0" precision="FP32">
+					<dim>-1</dim>
+					<dim>80</dim>
+				</port>
+				<port id="1" precision="FP32">
+					<dim>-1</dim>
+					<dim>80</dim>
+				</port>
+			</input>
+			<output>
+				<port id="2" precision="FP32" names="dien/fcn/add_5:0">
+					<dim>-1</dim>
+					<dim>80</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="254" name="dien/fcn/f3/kernel/read" type="Const" version="opset1">
+			<data element_type="f32" shape="2, 80" offset="66036880" size="640" />
+			<output>
+				<port id="0" precision="FP32" names="dien/fcn/f3/kernel/read:0">
+					<dim>2</dim>
+					<dim>80</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="255" name="dien/fcn/f3/MatMul" type="MatMul" version="opset1">
+			<data transpose_a="false" transpose_b="true" />
+			<input>
+				<port id="0" precision="FP32">
+					<dim>-1</dim>
+					<dim>80</dim>
+				</port>
+				<port id="1" precision="FP32">
+					<dim>2</dim>
+					<dim>80</dim>
+				</port>
+			</input>
+			<output>
+				<port id="2" precision="FP32" names="dien/fcn/f3/MatMul:0">
+					<dim>-1</dim>
+					<dim>2</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="256" name="dien/fcn/f3/bias/read" type="Const" version="opset1">
+			<data element_type="f32" shape="1, 2" offset="66037520" size="8" />
+			<output>
+				<port id="0" precision="FP32" names="dien/fcn/f3/bias/read:0">
+					<dim>1</dim>
+					<dim>2</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="257" name="dien/fcn/f3/BiasAdd/Add" type="Add" version="opset1">
+			<data auto_broadcast="numpy" />
+			<input>
+				<port id="0" precision="FP32">
+					<dim>-1</dim>
+					<dim>2</dim>
+				</port>
+				<port id="1" precision="FP32">
+					<dim>1</dim>
+					<dim>2</dim>
+				</port>
+			</input>
+			<output>
+				<port id="2" precision="FP32" names="dien/fcn/f3/BiasAdd:0">
+					<dim>-1</dim>
+					<dim>2</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="258" name="dien/fcn/Softmax" type="SoftMax" version="opset8">
+			<data axis="-1" />
+			<input>
+				<port id="0" precision="FP32">
+					<dim>-1</dim>
+					<dim>2</dim>
+				</port>
+			</input>
+			<output>
+				<port id="1" precision="FP32" names="dien/fcn/Softmax,dien/fcn/Softmax:0">
+					<dim>-1</dim>
+					<dim>2</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="259" name="dien/fcn/Softmax:0" type="Result" version="opset1">
+			<input>
+				<port id="0" precision="FP32">
+					<dim>-1</dim>
+					<dim>2</dim>
+				</port>
+			</input>
+		</layer>
+	</layers>
+	<edges>
+		<edge from-layer="0" from-port="0" to-layer="190" to-port="3" />
+		<edge from-layer="0" from-port="0" to-layer="72" to-port="3" />
+		<edge from-layer="1" from-port="0" to-layer="31" to-port="0" />
+		<edge from-layer="1" from-port="0" to-layer="28" to-port="0" />
+		<edge from-layer="2" from-port="0" to-layer="15" to-port="1" />
+		<edge from-layer="3" from-port="0" to-layer="12" to-port="1" />
+		<edge from-layer="4" from-port="0" to-layer="9" to-port="1" />
+		<edge from-layer="5" from-port="0" to-layer="22" to-port="1" />
+		<edge from-layer="6" from-port="0" to-layer="19" to-port="1" />
+		<edge from-layer="7" from-port="0" to-layer="9" to-port="0" />
+		<edge from-layer="8" from-port="0" to-layer="9" to-port="2" />
+		<edge from-layer="9" from-port="3" to-layer="191" to-port="0" />
+		<edge from-layer="10" from-port="0" to-layer="12" to-port="0" />
+		<edge from-layer="11" from-port="0" to-layer="12" to-port="2" />
+		<edge from-layer="12" from-port="3" to-layer="16" to-port="0" />
+		<edge from-layer="13" from-port="0" to-layer="15" to-port="0" />
+		<edge from-layer="14" from-port="0" to-layer="15" to-port="2" />
+		<edge from-layer="15" from-port="3" to-layer="16" to-port="1" />
+		<edge from-layer="16" from-port="2" to-layer="36" to-port="0" />
+		<edge from-layer="16" from-port="2" to-layer="26" to-port="0" />
+		<edge from-layer="16" from-port="2" to-layer="191" to-port="1" />
+		<edge from-layer="17" from-port="0" to-layer="19" to-port="0" />
+		<edge from-layer="18" from-port="0" to-layer="19" to-port="2" />
+		<edge from-layer="19" from-port="3" to-layer="23" to-port="0" />
+		<edge from-layer="20" from-port="0" to-layer="22" to-port="0" />
+		<edge from-layer="21" from-port="0" to-layer="22" to-port="2" />
+		<edge from-layer="22" from-port="3" to-layer="23" to-port="1" />
+		<edge from-layer="23" from-port="2" to-layer="47" to-port="0" />
+		<edge from-layer="23" from-port="2" to-layer="25" to-port="0" />
+		<edge from-layer="24" from-port="0" to-layer="25" to-port="1" />
+		<edge from-layer="25" from-port="2" to-layer="26" to-port="1" />
+		<edge from-layer="25" from-port="2" to-layer="191" to-port="2" />
+		<edge from-layer="26" from-port="2" to-layer="191" to-port="3" />
+		<edge from-layer="27" from-port="0" to-layer="30" to-port="0" />
+		<edge from-layer="28" from-port="1" to-layer="29" to-port="0" />
+		<edge from-layer="29" from-port="1" to-layer="30" to-port="1" />
+		<edge from-layer="30" from-port="2" to-layer="31" to-port="1" />
+		<edge from-layer="31" from-port="2" to-layer="33" to-port="0" />
+		<edge from-layer="32" from-port="0" to-layer="33" to-port="1" />
+		<edge from-layer="33" from-port="2" to-layer="150" to-port="0" />
+		<edge from-layer="34" from-port="0" to-layer="39" to-port="0" />
+		<edge from-layer="35" from-port="0" to-layer="36" to-port="1" />
+		<edge from-layer="36" from-port="2" to-layer="38" to-port="0" />
+		<edge from-layer="37" from-port="0" to-layer="38" to-port="1" />
+		<edge from-layer="38" from-port="2" to-layer="39" to-port="1" />
+		<edge from-layer="38" from-port="2" to-layer="42" to-port="1" />
+		<edge from-layer="39" from-port="2" to-layer="44" to-port="0" />
+		<edge from-layer="40" from-port="0" to-layer="43" to-port="0" />
+		<edge from-layer="41" from-port="0" to-layer="42" to-port="0" />
+		<edge from-layer="42" from-port="2" to-layer="43" to-port="1" />
+		<edge from-layer="43" from-port="2" to-layer="44" to-port="1" />
+		<edge from-layer="44" from-port="2" to-layer="83" to-port="0" />
+		<edge from-layer="45" from-port="0" to-layer="82" to-port="0" />
+		<edge from-layer="46" from-port="0" to-layer="47" to-port="1" />
+		<edge from-layer="47" from-port="2" to-layer="49" to-port="0" />
+		<edge from-layer="47" from-port="2" to-layer="72" to-port="0" />
+		<edge from-layer="48" from-port="0" to-layer="59" to-port="0" />
+		<edge from-layer="49" from-port="1" to-layer="53" to-port="0" />
+		<edge from-layer="49" from-port="1" to-layer="64" to-port="0" />
+		<edge from-layer="50" from-port="0" to-layer="53" to-port="1" />
+		<edge from-layer="51" from-port="0" to-layer="53" to-port="2" />
+		<edge from-layer="52" from-port="0" to-layer="53" to-port="3" />
+		<edge from-layer="53" from-port="4" to-layer="55" to-port="0" />
+		<edge from-layer="54" from-port="0" to-layer="55" to-port="1" />
+		<edge from-layer="55" from-port="2" to-layer="57" to-port="0" />
+		<edge from-layer="56" from-port="0" to-layer="57" to-port="1" />
+		<edge from-layer="57" from-port="2" to-layer="58" to-port="0" />
+		<edge from-layer="58" from-port="1" to-layer="59" to-port="1" />
+		<edge from-layer="59" from-port="2" to-layer="72" to-port="1" />
+		<edge from-layer="60" from-port="0" to-layer="70" to-port="0" />
+		<edge from-layer="61" from-port="0" to-layer="64" to-port="1" />
+		<edge from-layer="62" from-port="0" to-layer="64" to-port="2" />
+		<edge from-layer="63" from-port="0" to-layer="64" to-port="3" />
+		<edge from-layer="64" from-port="4" to-layer="66" to-port="0" />
+		<edge from-layer="65" from-port="0" to-layer="66" to-port="1" />
+		<edge from-layer="66" from-port="2" to-layer="68" to-port="0" />
+		<edge from-layer="67" from-port="0" to-layer="68" to-port="1" />
+		<edge from-layer="68" from-port="2" to-layer="69" to-port="0" />
+		<edge from-layer="69" from-port="1" to-layer="70" to-port="1" />
+		<edge from-layer="70" from-port="2" to-layer="72" to-port="2" />
+		<edge from-layer="71" from-port="0" to-layer="72" to-port="4" />
+		<edge from-layer="72" from-port="5" to-layer="74" to-port="0" />
+		<edge from-layer="73" from-port="0" to-layer="74" to-port="1" />
+		<edge from-layer="74" from-port="2" to-layer="176" to-port="0" />
+		<edge from-layer="74" from-port="2" to-layer="75" to-port="0" />
+		<edge from-layer="74" from-port="2" to-layer="88" to-port="1" />
+		<edge from-layer="74" from-port="2" to-layer="87" to-port="1" />
+		<edge from-layer="74" from-port="2" to-layer="86" to-port="1" />
+		<edge from-layer="75" from-port="1" to-layer="138" to-port="0" />
+		<edge from-layer="75" from-port="1" to-layer="84" to-port="0" />
+		<edge from-layer="75" from-port="1" to-layer="79" to-port="0" />
+		<edge from-layer="75" from-port="1" to-layer="167" to-port="0" />
+		<edge from-layer="76" from-port="0" to-layer="79" to-port="1" />
+		<edge from-layer="77" from-port="0" to-layer="79" to-port="2" />
+		<edge from-layer="78" from-port="0" to-layer="79" to-port="3" />
+		<edge from-layer="79" from-port="4" to-layer="81" to-port="0" />
+		<edge from-layer="80" from-port="0" to-layer="81" to-port="1" />
+		<edge from-layer="81" from-port="2" to-layer="82" to-port="1" />
+		<edge from-layer="82" from-port="2" to-layer="83" to-port="1" />
+		<edge from-layer="83" from-port="2" to-layer="85" to-port="0" />
+		<edge from-layer="84" from-port="1" to-layer="85" to-port="1" />
+		<edge from-layer="85" from-port="2" to-layer="86" to-port="0" />
+		<edge from-layer="85" from-port="2" to-layer="88" to-port="0" />
+		<edge from-layer="85" from-port="2" to-layer="87" to-port="0" />
+		<edge from-layer="86" from-port="2" to-layer="88" to-port="2" />
+		<edge from-layer="87" from-port="2" to-layer="88" to-port="3" />
+		<edge from-layer="88" from-port="4" to-layer="93" to-port="0" />
+		<edge from-layer="88" from-port="4" to-layer="90" to-port="0" />
+		<edge from-layer="89" from-port="0" to-layer="90" to-port="1" />
+		<edge from-layer="90" from-port="2" to-layer="92" to-port="0" />
+		<edge from-layer="91" from-port="0" to-layer="92" to-port="1" />
+		<edge from-layer="92" from-port="2" to-layer="100" to-port="0" />
+		<edge from-layer="93" from-port="1" to-layer="96" to-port="0" />
+		<edge from-layer="94" from-port="0" to-layer="96" to-port="1" />
+		<edge from-layer="95" from-port="0" to-layer="96" to-port="2" />
+		<edge from-layer="96" from-port="3" to-layer="98" to-port="0" />
+		<edge from-layer="97" from-port="0" to-layer="98" to-port="1" />
+		<edge from-layer="98" from-port="2" to-layer="99" to-port="0" />
+		<edge from-layer="99" from-port="1" to-layer="100" to-port="1" />
+		<edge from-layer="100" from-port="2" to-layer="102" to-port="0" />
+		<edge from-layer="101" from-port="0" to-layer="102" to-port="1" />
+		<edge from-layer="102" from-port="2" to-layer="103" to-port="0" />
+		<edge from-layer="103" from-port="1" to-layer="105" to-port="0" />
+		<edge from-layer="103" from-port="1" to-layer="108" to-port="0" />
+		<edge from-layer="104" from-port="0" to-layer="105" to-port="1" />
+		<edge from-layer="105" from-port="2" to-layer="107" to-port="0" />
+		<edge from-layer="106" from-port="0" to-layer="107" to-port="1" />
+		<edge from-layer="107" from-port="2" to-layer="115" to-port="0" />
+		<edge from-layer="108" from-port="1" to-layer="111" to-port="0" />
+		<edge from-layer="109" from-port="0" to-layer="111" to-port="1" />
+		<edge from-layer="110" from-port="0" to-layer="111" to-port="2" />
+		<edge from-layer="111" from-port="3" to-layer="113" to-port="0" />
+		<edge from-layer="112" from-port="0" to-layer="113" to-port="1" />
+		<edge from-layer="113" from-port="2" to-layer="114" to-port="0" />
+		<edge from-layer="114" from-port="1" to-layer="115" to-port="1" />
+		<edge from-layer="115" from-port="2" to-layer="117" to-port="0" />
+		<edge from-layer="116" from-port="0" to-layer="117" to-port="1" />
+		<edge from-layer="117" from-port="2" to-layer="118" to-port="0" />
+		<edge from-layer="118" from-port="1" to-layer="123" to-port="0" />
+		<edge from-layer="118" from-port="1" to-layer="120" to-port="0" />
+		<edge from-layer="119" from-port="0" to-layer="120" to-port="1" />
+		<edge from-layer="120" from-port="2" to-layer="122" to-port="0" />
+		<edge from-layer="121" from-port="0" to-layer="122" to-port="1" />
+		<edge from-layer="122" from-port="2" to-layer="130" to-port="0" />
+		<edge from-layer="123" from-port="1" to-layer="126" to-port="0" />
+		<edge from-layer="124" from-port="0" to-layer="126" to-port="1" />
+		<edge from-layer="125" from-port="0" to-layer="126" to-port="2" />
+		<edge from-layer="126" from-port="3" to-layer="128" to-port="0" />
+		<edge from-layer="127" from-port="0" to-layer="128" to-port="1" />
+		<edge from-layer="128" from-port="2" to-layer="129" to-port="0" />
+		<edge from-layer="129" from-port="1" to-layer="130" to-port="1" />
+		<edge from-layer="130" from-port="2" to-layer="132" to-port="0" />
+		<edge from-layer="131" from-port="0" to-layer="132" to-port="1" />
+		<edge from-layer="132" from-port="2" to-layer="143" to-port="0" />
+		<edge from-layer="133" from-port="0" to-layer="141" to-port="0" />
+		<edge from-layer="134" from-port="0" to-layer="141" to-port="1" />
+		<edge from-layer="135" from-port="0" to-layer="138" to-port="1" />
+		<edge from-layer="136" from-port="0" to-layer="138" to-port="2" />
+		<edge from-layer="137" from-port="0" to-layer="138" to-port="3" />
+		<edge from-layer="138" from-port="4" to-layer="140" to-port="0" />
+		<edge from-layer="139" from-port="0" to-layer="140" to-port="1" />
+		<edge from-layer="140" from-port="2" to-layer="141" to-port="2" />
+		<edge from-layer="141" from-port="3" to-layer="142" to-port="0" />
+		<edge from-layer="142" from-port="1" to-layer="143" to-port="1" />
+		<edge from-layer="143" from-port="2" to-layer="150" to-port="1" />
+		<edge from-layer="143" from-port="2" to-layer="145" to-port="0" />
+		<edge from-layer="144" from-port="0" to-layer="147" to-port="0" />
+		<edge from-layer="145" from-port="1" to-layer="146" to-port="0" />
+		<edge from-layer="146" from-port="1" to-layer="147" to-port="1" />
+		<edge from-layer="147" from-port="2" to-layer="149" to-port="0" />
+		<edge from-layer="148" from-port="0" to-layer="149" to-port="1" />
+		<edge from-layer="149" from-port="2" to-layer="150" to-port="2" />
+		<edge from-layer="150" from-port="3" to-layer="159" to-port="0" />
+		<edge from-layer="150" from-port="3" to-layer="152" to-port="0" />
+		<edge from-layer="151" from-port="0" to-layer="157" to-port="0" />
+		<edge from-layer="152" from-port="1" to-layer="161" to-port="0" />
+		<edge from-layer="152" from-port="1" to-layer="156" to-port="0" />
+		<edge from-layer="153" from-port="0" to-layer="156" to-port="1" />
+		<edge from-layer="154" from-port="0" to-layer="156" to-port="2" />
+		<edge from-layer="155" from-port="0" to-layer="156" to-port="3" />
+		<edge from-layer="156" from-port="4" to-layer="157" to-port="1" />
+		<edge from-layer="157" from-port="2" to-layer="158" to-port="0" />
+		<edge from-layer="158" from-port="1" to-layer="159" to-port="1" />
+		<edge from-layer="159" from-port="2" to-layer="160" to-port="0" />
+		<edge from-layer="160" from-port="1" to-layer="162" to-port="0" />
+		<edge from-layer="161" from-port="1" to-layer="162" to-port="1" />
+		<edge from-layer="162" from-port="2" to-layer="172" to-port="0" />
+		<edge from-layer="163" from-port="0" to-layer="170" to-port="0" />
+		<edge from-layer="164" from-port="0" to-layer="167" to-port="1" />
+		<edge from-layer="165" from-port="0" to-layer="167" to-port="2" />
+		<edge from-layer="166" from-port="0" to-layer="167" to-port="3" />
+		<edge from-layer="167" from-port="4" to-layer="169" to-port="0" />
+		<edge from-layer="168" from-port="0" to-layer="169" to-port="1" />
+		<edge from-layer="169" from-port="2" to-layer="170" to-port="1" />
+		<edge from-layer="170" from-port="2" to-layer="171" to-port="0" />
+		<edge from-layer="171" from-port="1" to-layer="172" to-port="1" />
+		<edge from-layer="172" from-port="2" to-layer="174" to-port="0" />
+		<edge from-layer="173" from-port="0" to-layer="174" to-port="1" />
+		<edge from-layer="174" from-port="2" to-layer="190" to-port="0" />
+		<edge from-layer="175" from-port="0" to-layer="176" to-port="1" />
+		<edge from-layer="176" from-port="2" to-layer="178" to-port="0" />
+		<edge from-layer="176" from-port="2" to-layer="190" to-port="1" />
+		<edge from-layer="177" from-port="0" to-layer="188" to-port="0" />
+		<edge from-layer="178" from-port="1" to-layer="182" to-port="0" />
+		<edge from-layer="179" from-port="0" to-layer="182" to-port="1" />
+		<edge from-layer="180" from-port="0" to-layer="182" to-port="2" />
+		<edge from-layer="181" from-port="0" to-layer="182" to-port="3" />
+		<edge from-layer="182" from-port="4" to-layer="184" to-port="0" />
+		<edge from-layer="183" from-port="0" to-layer="184" to-port="1" />
+		<edge from-layer="184" from-port="2" to-layer="186" to-port="0" />
+		<edge from-layer="185" from-port="0" to-layer="186" to-port="1" />
+		<edge from-layer="186" from-port="2" to-layer="187" to-port="0" />
+		<edge from-layer="187" from-port="1" to-layer="188" to-port="1" />
+		<edge from-layer="188" from-port="2" to-layer="190" to-port="2" />
+		<edge from-layer="189" from-port="0" to-layer="190" to-port="4" />
+		<edge from-layer="190" from-port="5" to-layer="191" to-port="4" />
+		<edge from-layer="191" from-port="5" to-layer="193" to-port="0" />
+		<edge from-layer="192" from-port="0" to-layer="193" to-port="1" />
+		<edge from-layer="193" from-port="2" to-layer="195" to-port="0" />
+		<edge from-layer="194" from-port="0" to-layer="195" to-port="1" />
+		<edge from-layer="195" from-port="2" to-layer="197" to-port="0" />
+		<edge from-layer="196" from-port="0" to-layer="197" to-port="1" />
+		<edge from-layer="197" from-port="2" to-layer="199" to-port="0" />
+		<edge from-layer="198" from-port="0" to-layer="199" to-port="1" />
+		<edge from-layer="199" from-port="2" to-layer="223" to-port="1" />
+		<edge from-layer="199" from-port="2" to-layer="222" to-port="1" />
+		<edge from-layer="199" from-port="2" to-layer="203" to-port="0" />
+		<edge from-layer="199" from-port="2" to-layer="202" to-port="0" />
+		<edge from-layer="199" from-port="2" to-layer="201" to-port="0" />
+		<edge from-layer="200" from-port="0" to-layer="201" to-port="1" />
+		<edge from-layer="201" from-port="2" to-layer="203" to-port="1" />
+		<edge from-layer="201" from-port="2" to-layer="202" to-port="1" />
+		<edge from-layer="202" from-port="2" to-layer="216" to-port="0" />
+		<edge from-layer="203" from-port="2" to-layer="205" to-port="0" />
+		<edge from-layer="204" from-port="0" to-layer="205" to-port="1" />
+		<edge from-layer="205" from-port="2" to-layer="207" to-port="0" />
+		<edge from-layer="206" from-port="0" to-layer="207" to-port="1" />
+		<edge from-layer="207" from-port="2" to-layer="209" to-port="0" />
+		<edge from-layer="208" from-port="0" to-layer="209" to-port="1" />
+		<edge from-layer="209" from-port="2" to-layer="211" to-port="0" />
+		<edge from-layer="210" from-port="0" to-layer="211" to-port="1" />
+		<edge from-layer="211" from-port="2" to-layer="213" to-port="0" />
+		<edge from-layer="212" from-port="0" to-layer="213" to-port="1" />
+		<edge from-layer="213" from-port="2" to-layer="215" to-port="0" />
+		<edge from-layer="214" from-port="0" to-layer="215" to-port="1" />
+		<edge from-layer="215" from-port="2" to-layer="216" to-port="1" />
+		<edge from-layer="216" from-port="2" to-layer="217" to-port="0" />
+		<edge from-layer="217" from-port="1" to-layer="223" to-port="0" />
+		<edge from-layer="217" from-port="1" to-layer="219" to-port="0" />
+		<edge from-layer="218" from-port="0" to-layer="219" to-port="1" />
+		<edge from-layer="219" from-port="2" to-layer="221" to-port="0" />
+		<edge from-layer="220" from-port="0" to-layer="221" to-port="1" />
+		<edge from-layer="221" from-port="2" to-layer="222" to-port="0" />
+		<edge from-layer="222" from-port="2" to-layer="224" to-port="0" />
+		<edge from-layer="223" from-port="2" to-layer="224" to-port="1" />
+		<edge from-layer="224" from-port="2" to-layer="226" to-port="0" />
+		<edge from-layer="225" from-port="0" to-layer="226" to-port="1" />
+		<edge from-layer="226" from-port="2" to-layer="228" to-port="0" />
+		<edge from-layer="227" from-port="0" to-layer="228" to-port="1" />
+		<edge from-layer="228" from-port="2" to-layer="252" to-port="1" />
+		<edge from-layer="228" from-port="2" to-layer="251" to-port="1" />
+		<edge from-layer="228" from-port="2" to-layer="231" to-port="0" />
+		<edge from-layer="228" from-port="2" to-layer="232" to-port="0" />
+		<edge from-layer="228" from-port="2" to-layer="230" to-port="0" />
+		<edge from-layer="229" from-port="0" to-layer="230" to-port="1" />
+		<edge from-layer="230" from-port="2" to-layer="232" to-port="1" />
+		<edge from-layer="230" from-port="2" to-layer="231" to-port="1" />
+		<edge from-layer="231" from-port="2" to-layer="245" to-port="0" />
+		<edge from-layer="232" from-port="2" to-layer="234" to-port="0" />
+		<edge from-layer="233" from-port="0" to-layer="234" to-port="1" />
+		<edge from-layer="234" from-port="2" to-layer="236" to-port="0" />
+		<edge from-layer="235" from-port="0" to-layer="236" to-port="1" />
+		<edge from-layer="236" from-port="2" to-layer="238" to-port="0" />
+		<edge from-layer="237" from-port="0" to-layer="238" to-port="1" />
+		<edge from-layer="238" from-port="2" to-layer="240" to-port="0" />
+		<edge from-layer="239" from-port="0" to-layer="240" to-port="1" />
+		<edge from-layer="240" from-port="2" to-layer="242" to-port="0" />
+		<edge from-layer="241" from-port="0" to-layer="242" to-port="1" />
+		<edge from-layer="242" from-port="2" to-layer="244" to-port="0" />
+		<edge from-layer="243" from-port="0" to-layer="244" to-port="1" />
+		<edge from-layer="244" from-port="2" to-layer="245" to-port="1" />
+		<edge from-layer="245" from-port="2" to-layer="246" to-port="0" />
+		<edge from-layer="246" from-port="1" to-layer="252" to-port="0" />
+		<edge from-layer="246" from-port="1" to-layer="248" to-port="0" />
+		<edge from-layer="247" from-port="0" to-layer="248" to-port="1" />
+		<edge from-layer="248" from-port="2" to-layer="250" to-port="0" />
+		<edge from-layer="249" from-port="0" to-layer="250" to-port="1" />
+		<edge from-layer="250" from-port="2" to-layer="251" to-port="0" />
+		<edge from-layer="251" from-port="2" to-layer="253" to-port="0" />
+		<edge from-layer="252" from-port="2" to-layer="253" to-port="1" />
+		<edge from-layer="253" from-port="2" to-layer="255" to-port="0" />
+		<edge from-layer="254" from-port="0" to-layer="255" to-port="1" />
+		<edge from-layer="255" from-port="2" to-layer="257" to-port="0" />
+		<edge from-layer="256" from-port="0" to-layer="257" to-port="1" />
+		<edge from-layer="257" from-port="2" to-layer="258" to-port="0" />
+		<edge from-layer="258" from-port="1" to-layer="259" to-port="0" />
+	</edges>
+	<rt_info>
+		<MO_version value="2023.1.0-11420-54e969012d5" />
+		<Runtime_version value="2023.1.0-11420-54e969012d5" />
+		<conversion_parameters>
+			<input value="Inputs/mid_his_batch_ph[-1,-1],Inputs/cat_his_batch_ph[-1,-1],Inputs/uid_batch_ph[-1],Inputs/mid_batch_ph[-1],Inputs/cat_batch_ph[-1],Inputs/mask[-1,-1],Inputs/seq_len_ph[-1]" />
+			<input_meta_graph value="DIR/ckpt_noshuffDIEN3.meta" />
+			<is_python_api_used value="False" />
+			<model_name value="DIEN" />
+			<output value="dien/fcn/Softmax" />
+			<output_dir value="/home/xsun/workspace/dien_ov/ai-matrix/macro_benchmark/DIEN_TF2/openvino/FP32" />
+		</conversion_parameters>
+		<legacy_frontend value="True" />
+	</rt_info>
+</net>

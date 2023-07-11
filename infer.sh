@@ -1,5 +1,6 @@
 #!/bin/bash
 BACKEND=${1:-tensorflow}
+INFER_PRECISION=${2:-f32}
 TOTAL_RECOMMDS=606720
 
 if [ -d results ]; then
@@ -15,7 +16,7 @@ do
 	echo "Running inference with batch size of $batch"
 	echo "----------------------------------------------------------------"
 	start=`date +%s%N`
-	python script/train.py --mode=test --batch_size=$batch --backend=$BACKEND |& tee results/result_infer_${batch}.txt
+	python script/train.py --mode=test --batch_size=$batch --backend=$BACKEND --infer_precision=$INFER_PRECISION |& tee results/result_infer_${batch}.txt
 	end=`date +%s%N`
 	total_time=$(((end-start)/1000000))
     #total_time=`bc <<< "scale = 3; ($end-$start)/1000000000"`

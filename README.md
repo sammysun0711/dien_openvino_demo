@@ -1,17 +1,21 @@
 # Deep Interest Evolution Network for Click-Through Rate Prediction with OpenVINO backend
 https://arxiv.org/abs/1809.03672
 
-This repo introduce how to run Deep Interest Evoluation Network (DIEN) with OpenVINO backend, please refer to orignal repo for details: https://github.com/alibaba/ai-matrix/tree/master/macro_benchmark/DIEN_TF2
+This repo introduce how to run Deep Interest Evoluation Network (DIEN) with OpenVINO backend.
+
+Please refer to orignal repo for details: https://github.com/alibaba/ai-matrix/tree/master/macro_benchmark/DIEN_TF2
 
 ## prepare data
 ### method 1
 You can get the data from amazon website and process it using the script
-```
+```bash
 sh prepare_data.sh
 ```
 ### method 2 (recommended)
 Because getting and processing the data is time consuming，so we had processed it and upload it for you. You can unzip it to use directly.
+```bash
 sh prepare_dataset.sh
+```
 ```
 When you see the files below, you can do the next work. 
 - cat_voc.pkl 
